@@ -84,17 +84,6 @@ router.put("/guides/:id", uploadGuide.single("photo"), async (req, res) => {
 });
 
 
-router.delete("/guides/:id", async (req, res) => {
-  try {
-    const guide = await Guide.findByIdAndDelete(req.params.id);
-
-    if (!guide) return res.status(404).json({ error: "Guide not found" });
-
-    res.status(200).json({ message: "Guide deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: "Error deleting guide", message: error.message });
-  }
-});
 
 
 module.exports = router;
