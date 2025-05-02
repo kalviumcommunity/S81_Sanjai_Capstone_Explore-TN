@@ -1,0 +1,31 @@
+const express = require("express");
+const bcrypt = require("bcrypt");
+const User = require("../models/userModel");
+const ErrorHandler = require("../utils/errorhandler");
+const catchAsyncError = require("../middelware/catchAsyncError");
+const router = express.Router();
+
+// Signup Route
+router.post("/signup", catchAsyncError(async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  // Log incoming request data for debugging
+  console.log('Signup request body:', req.body);
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const newUser = new User({ name, email, password: hashedPassword });
+
+  await newUser.save();
+
+  // Log user creation success
+  console.log('New user created:', newUser);
+
+  res.status(201).json({ message: "User registered successfully" });
+}));
+
+module.exports = router;
