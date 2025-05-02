@@ -83,7 +83,6 @@ router.put("/guides/:id", uploadGuide.single("photo"), async (req, res) => {
   }
 });
 
-
 router.delete("/guides/:id", async (req, res) => {
   try {
     const guide = await Guide.findByIdAndDelete(req.params.id);
