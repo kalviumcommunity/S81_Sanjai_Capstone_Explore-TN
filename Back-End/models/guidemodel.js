@@ -11,8 +11,9 @@ const guideSchema = new mongoose.Schema({
       unique: true
     },
     phone: {
-      type: String,
-      required: true
+      type: Number,
+      required: true,
+      unique: true
     },
     location: {
       type: String,
@@ -27,7 +28,8 @@ const guideSchema = new mongoose.Schema({
       default: 0
     },
     bio: {
-      type: String
+      type: String,
+      required: true
     },
     photo: {
       type: String 
