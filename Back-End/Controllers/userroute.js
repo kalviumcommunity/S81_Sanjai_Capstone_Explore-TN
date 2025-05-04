@@ -5,7 +5,6 @@ const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middelware/catchAsyncError");
 const router = express.Router();
 
-// Signup Route
 router.post("/signup", catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
 
@@ -22,7 +21,6 @@ router.post("/signup", catchAsyncError(async (req, res, next) => {
 
   await newUser.save();
 
-  // Log user creation success
   console.log('New user created:', newUser);
 
   res.status(201).json({ message: "User registered successfully" });
