@@ -5,7 +5,7 @@ const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middelware/catchAsyncError");
 const router = express.Router();
 
-// Signup Route
+
 router.post("/signup", catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
 
