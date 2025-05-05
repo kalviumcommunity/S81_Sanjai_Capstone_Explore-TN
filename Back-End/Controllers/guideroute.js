@@ -33,20 +33,16 @@ router.post("/guides", uploadGuide.single("photo"), async (req, res) => {
   }
 });
 
-router.get("/guides", async (req, res) => {
-  try {
-    const { location, language } = req.query;
-
-    let filter = {};
-    if (location) filter.location = location;
-    if (language) filter.languages = { $in: [language] };
-
-    const guides = await Guide.find(filter);
-    res.status(200).json(guides);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching guides", error: error.message });
-  }
+router.get("/guides", (req, res) => {
+  Guide.find()
+    .then(guides => {
+      res.status(200).json(guides);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "Error fetching guides", error: error.message });
+    });
 });
+
 
 // GET - Fetch guide by ID
 router.get("/guides/:id", async (req, res) => {
