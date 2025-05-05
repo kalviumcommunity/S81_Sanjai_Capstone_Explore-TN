@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Guide = require("../models/guidemodel");
 const uploadGuide = require("../middelware/multer");
+import { app } from "../app";
 
 // POST - Create new guide
 router.post("/guides", uploadGuide.single("photo"), async (req, res) => {
