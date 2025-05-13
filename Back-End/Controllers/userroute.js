@@ -5,6 +5,8 @@ const User = require("../models/userModel");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middelware/catchAsyncError");
 const router = express.Router();
+const jwt=require("jsonwebtoken")
+const {sendMail}=require("../utils/mail")
 
 router.post("/signup", catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -40,7 +42,32 @@ router.post("/login", catchAsyncError(async (req, res, next) => {
     return res.status(400).json({ message: "Invalid credentials" });
   }
 
-  res.status(200).json({ message: "Login successful" });
+  const token = jwt.sign(
+    { id: user._id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+
+  await sendMail({
+    email: user.email,
+    subject: "Login Notification From  - ExploreTN",
+    message: `We are welcoming you.Hi ${user.name},\n\nYou just logged in to your ExploreTN account.\n\nIf this wasn’t you, please reset your password immediately.\n\nThanks,\nTeam ExploreTN`,
+  });
+
+  // ✅ Send response
+  res.status(200).json({
+  message: "Login successful and Welcome to the Explore-TN",
+  token,
+  user: {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+  },
+});
+
+res.status(200).json({ message: "Login successful" }); // ❌ This is the second response!
+
 }));
 
 router.delete("/user/:id", catchAsyncError(async (req, res, next) => {
