@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "CAPSTONE-2K25",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
