@@ -26,7 +26,7 @@ const Sidebar = () => {
         </li>
 
         <li>
-          <Link to="/booking" className={`flex items-center space-x-4 py-3 px-4 rounded-xl cursor-pointer ${isActive("/booking")}`}>
+          <Link to="/UserPick" className={`flex items-center space-x-4 py-3 px-4 rounded-xl cursor-pointer ${isActive("/UserPick")}`}>
             <FaTicketAlt size={22} />
             <span className="text-lg">User's Pick</span>
           </Link>

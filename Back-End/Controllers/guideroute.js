@@ -58,7 +58,7 @@ router.get("/guides/:id", async (req, res) => {
   }
 });
 
-router.put("/guides/:id", uploadGuide.single("photo"), async (req, res) => {
+router.put("/guides/:id", async (req, res) => {
   try {
     const { name, email, phone, location, languages, experience, bio } = req.body;
 
@@ -67,10 +67,9 @@ router.put("/guides/:id", uploadGuide.single("photo"), async (req, res) => {
       email,
       phone,
       location,
-      languages: languages?.split(",") || [],
+      languages: Array.isArray(languages) ? languages : languages.split(","),
       experience,
-      bio,
-      photo: req.file ? `/uploads/guides/${req.file.filename}` : undefined
+      bio
     };
 
     const guide = await Guide.findByIdAndUpdate(req.params.id, updatedData, { new: true });
@@ -82,6 +81,7 @@ router.put("/guides/:id", uploadGuide.single("photo"), async (req, res) => {
     res.status(500).json({ error: "Error updating guide", message: error.message });
   }
 });
+
 
 router.delete("/guides/:id", async (req, res) => {
   try {

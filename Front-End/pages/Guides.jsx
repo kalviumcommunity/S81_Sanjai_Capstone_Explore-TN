@@ -14,8 +14,6 @@ function Guides() {
       try {
         const res = await fetch('http://localhost:8000/Guide/guides');
         const data = await res.json();
-
-        // Directly use the ratings from the backend response (remove the fake ratings logic)
         setGuides(data);
       } catch (error) {
         console.error('Error fetching guides:', error);
@@ -28,24 +26,21 @@ function Guides() {
     fetchGuides();
   }, []);
 
-  const goToSignupForm = () => {
-    navigate('/GuideForm');
-  };
+  const goToSignupForm = () => navigate('/GuideForm');
 
-  const goToGuideProfile = (guideId) => {
-    navigate(`/guides/${guideId}`);
+  const goToGuideProfile = (id) => navigate(`/guides/${id}`);
+
+  const handleLogout = () => {
+    localStorage.removeItem('guideId');
+    setGuideId(null);
   };
 
   const locations = [...new Set(guides.map((g) => g.location))];
   const languages = [...new Set(guides.flatMap((g) => g.languages || []))];
 
   const filteredGuides = guides.filter((guide) => {
-    const matchesLocation = selectedLocation
-      ? guide.location === selectedLocation
-      : true;
-    const matchesLanguage = selectedLanguage
-      ? guide.languages?.includes(selectedLanguage)
-      : true;
+    const matchesLocation = selectedLocation ? guide.location === selectedLocation : true;
+    const matchesLanguage = selectedLanguage ? guide.languages?.includes(selectedLanguage) : true;
     return matchesLocation && matchesLanguage;
   });
 
@@ -53,21 +48,31 @@ function Guides() {
     <div className="p-6 bg-gray-900 min-h-screen text-white">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Guide Dashboard</h1>
-        {guideId ? (
-          <button
-            onClick={() => goToGuideProfile(guideId)}
-            className="text-3xl text-white bg-cyan-500 hover:bg-cyan-600 rounded-full p-3 transition"
-          >
-            <FaUserCircle />
-          </button>
-        ) : (
-          <button
-            onClick={goToSignupForm}
-            className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold px-4 py-2 rounded-lg transition"
-          >
-            Create Guide Profile
-          </button>
-        )}
+        <div className="flex items-center gap-4">
+          {guideId ? (
+            <>
+              <button
+                onClick={() => goToGuideProfile(guideId)}
+                className="text-3xl text-white bg-cyan-500 hover:bg-cyan-600 rounded-full p-3 transition"
+              >
+                <FaUserCircle />
+              </button>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={goToSignupForm}
+              className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold px-4 py-2 rounded-lg transition"
+            >
+              Create Guide Profile
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Filters */}
@@ -141,13 +146,12 @@ function Guides() {
                 {guide.languages?.length > 0 ? guide.languages.join(', ') : 'Not listed'}
               </p>
 
-              {/* ⭐ Rating Widget */}
               <RatingWidget
                 avgRating={guide.avgRating}
                 totalRatings={guide.totalRatings}
                 onRate={(rating) => {
                   console.log(`User rated ${guide.name} with ${rating} stars`);
-                  // TODO: Post this to the backend
+                  // TODO: Call your backend here
                 }}
               />
             </div>
@@ -160,7 +164,6 @@ function Guides() {
 
 export default Guides;
 
-// ✅ Rating Widget Component
 const RatingWidget = ({ avgRating = 0, totalRatings = 0, onRate }) => {
   const [userRating, setUserRating] = useState(0);
   const [hover, setHover] = useState(null);

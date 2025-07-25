@@ -1,7 +1,7 @@
 .calendar-container {
   position: fixed;
   right: 0;
-  top: 0;
+  top: 80px;
   width: 21%;
   height: 100vh; /* Full screen height */
   background-color: #0c1220;

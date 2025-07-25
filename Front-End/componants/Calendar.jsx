@@ -100,10 +100,11 @@ const CalendarCard = () => {
 
   return (
     <div className="calendar-container">
-      <div className="profile-section">
+      {/* <div className="profile-section">
         <FaUserCircle size={32} color="#b0b0b0" className="profile-icon" />
         <span className="profile-name">{userName || "Anni"}</span>
-      </div>
+      </div> */}
+      
 
       <div className="calendar-wrapper">
         <Calendar

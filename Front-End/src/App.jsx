@@ -9,6 +9,9 @@ import ChatApp from "../pages/ExploreAI";
 import Guides from "../pages/Guides";
 import SimpleGuideForm from "../componants/GuideForm";
 import GuideProfile from "../componants/GuideProfile";
+import GuideEdit from "../pages/GuideEdit";
+import UserPickForm from "../pages/UserPickForm";
+import UserPicks from "../pages/UserPicks";
 
 function App() {
   return (
@@ -26,6 +29,10 @@ function App() {
             <Route path="/Explore-ai" element={<ChatApp />}/>
             <Route path="/GuideForm" element={<SimpleGuideForm />}/>
             <Route  path="/guides/:id" element={<GuideProfile />}/>
+            <Route path="/guides/:id/edit" element={<GuideEdit />} />
+            <Route path="/UserPickForm" element={<UserPickForm />} />
+            <Route path="/UserPick" element={<UserPicks />} />
+
 
           </Routes>
         </div>

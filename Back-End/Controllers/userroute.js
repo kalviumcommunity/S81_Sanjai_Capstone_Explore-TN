@@ -70,6 +70,29 @@ res.status(200).json({ message: "Login successful" }); // ❌ This is the second
 
 }));
 
+// ✅ Get all users
+router.get("/users", catchAsyncError(async (req, res, next) => {
+  const users = await User.find({});
+  res.status(200).json(users);
+}));
+
+// ✅ Get user by ID
+router.get("/users/:id", catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.status(200).json({
+    id: user._id,
+    name: user.name,
+    email: user.email,
+  });
+}));
+
+
+
 router.delete("/user/:id", catchAsyncError(async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.params.id);
 
