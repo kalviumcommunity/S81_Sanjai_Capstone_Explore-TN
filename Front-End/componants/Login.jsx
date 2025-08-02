@@ -20,7 +20,11 @@ const Login = () => {
 
       if (res.ok) {
         alert("Login successful!");
-        localStorage.setItem("user", JSON.stringify(data)); // optional: store user/token
+
+        // ✅ Correctly save the token and user
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
         navigate("/"); // redirect to dashboard or homepage
       } else {
         alert(data.message || "Invalid credentials");

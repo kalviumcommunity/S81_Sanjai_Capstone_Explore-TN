@@ -1,15 +1,26 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaTachometerAlt, FaTicketAlt, FaBookmark, FaEnvelope, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import { RiRobot3Fill } from 'react-icons/ri';
 import { BsPersonBoundingBox } from 'react-icons/bs';
 
-
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ Needed for navigation!
 
   // Function to check if link is active
-  const isActive = (path) => location.pathname === path ? "bg-lime-400 text-black" : "hover:bg-lime-400 hover:text-black transition-all duration-300";
+  const isActive = (path) =>
+    location.pathname === path
+      ? "bg-lime-400 text-black"
+      : "hover:bg-lime-400 hover:text-black transition-all duration-300";
+
+  // ✅ New logout handler
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear your auth token
+    localStorage.removeItem('user');  // Clear any stored user data too (optional)
+    alert('You have been logged out.');
+    navigate('/login'); // Redirect to login or home page
+  };
 
   return (
     <div className="w-64 h-screen bg-gradient-to-b from-gray-900 to-gray-800 p-6 flex flex-col text-gray-400 relative space-y-10">
@@ -40,7 +51,7 @@ const Sidebar = () => {
         </li>
 
         <li>
-          <Link to="/messages" className={`flex items-center space-x-4 py-3 px-4 rounded-xl cursor-pointer ${isActive("/messages")}`}>
+          <Link to="/hotels" className={`flex items-center space-x-4 py-3 px-4 rounded-xl cursor-pointer ${isActive("/hotels")}`}>
             <FaEnvelope size={22} />
             <span className="text-lg">Bookings</span>
           </Link>
@@ -60,7 +71,6 @@ const Sidebar = () => {
           </Link>
         </li>
 
-
         <li>
           <Link to="/settings" className={`flex items-center space-x-4 py-3 px-4 rounded-xl cursor-pointer ${isActive("/settings")}`}>
             <FaCog size={22} />
@@ -69,9 +79,12 @@ const Sidebar = () => {
         </li>
       </ul>
 
-     
+      {/* ✅ Working logout button */}
       <div className="mt-auto">
-        <button className="w-full bg-red-500 flex items-center justify-center gap-2 py-3 rounded-lg text-white hover:bg-red-600 transition-all duration-300">
+        <button
+          onClick={handleLogout} // ✅ call the handler
+          className="w-full bg-red-500 flex items-center justify-center gap-2 py-3 rounded-lg text-white hover:bg-red-600 transition-all duration-300"
+        >
           <FaSignOutAlt size={20} />
           <span className="text-lg">Logout</span>
         </button>

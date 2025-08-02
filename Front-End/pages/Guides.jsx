@@ -105,7 +105,7 @@ function Guides() {
       </div>
 
       {/* Guide Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredGuides.map((guide) => (
           <div
             key={guide._id}
@@ -164,6 +164,7 @@ function Guides() {
 
 export default Guides;
 
+// ✅ RatingWidget
 const RatingWidget = ({ avgRating = 0, totalRatings = 0, onRate }) => {
   const [userRating, setUserRating] = useState(0);
   const [hover, setHover] = useState(null);

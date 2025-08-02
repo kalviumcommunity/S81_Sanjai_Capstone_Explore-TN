@@ -7,6 +7,8 @@ const catchAsyncError = require("../middelware/catchAsyncError");
 const router = express.Router();
 const jwt=require("jsonwebtoken")
 const {sendMail}=require("../utils/mail")
+const { isAuthenticatedUser } = require("../middelware/authMiddleware");
+
 
 router.post("/signup", catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -48,33 +50,39 @@ router.post("/login", catchAsyncError(async (req, res, next) => {
     { expiresIn: "1d" }
   );
 
-
   await sendMail({
     email: user.email,
     subject: "Login Notification From  - ExploreTN",
-    message: `We are welcoming you.Hi ${user.name},\n\nYou just logged in to your ExploreTN account.\n\nIf this wasn’t you, please reset your password immediately.\n\nThanks,\nTeam ExploreTN`,
+    message: `We are welcoming you. Hi ${user.name},\n\nYou just logged in to your ExploreTN account.\n\nIf this wasn’t you, please reset your password immediately.\n\nThanks,\nTeam ExploreTN`,
   });
 
-  // ✅ Send response
+  // ✅ ONLY ONE RESPONSE!
   res.status(200).json({
-  message: "Login successful and Welcome to the Explore-TN",
-  token,
-  user: {
-    id: user._id,
-    name: user.name,
-    email: user.email,
-  },
-});
-
-res.status(200).json({ message: "Login successful" }); // ❌ This is the second response!
+    message: "Login successful and Welcome to the Explore-TN",
+    token,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  });
 
 }));
+
 
 // ✅ Get all users
-router.get("/users", catchAsyncError(async (req, res, next) => {
-  const users = await User.find({});
-  res.status(200).json(users);
+// ✅ Get my profile (protected)
+router.get("/profile", isAuthenticatedUser, catchAsyncError(async (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    user: {
+      id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+    },
+  });
 }));
+
 
 // ✅ Get user by ID
 router.get("/users/:id", catchAsyncError(async (req, res, next) => {

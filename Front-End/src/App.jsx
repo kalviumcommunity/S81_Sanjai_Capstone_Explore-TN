@@ -12,6 +12,9 @@ import GuideProfile from "../componants/GuideProfile";
 import GuideEdit from "../pages/GuideEdit";
 import UserPickForm from "../pages/UserPickForm";
 import UserPicks from "../pages/UserPicks";
+import Profile from "../pages/Profile";
+import HotelList from "../pages/HotelList";
+import Favourite from "../pages/FavoritesPage";
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
             <Route path="/guides/:id/edit" element={<GuideEdit />} />
             <Route path="/UserPickForm" element={<UserPickForm />} />
             <Route path="/UserPick" element={<UserPicks />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/hotels" element={<HotelList />} />
+            <Route path="/Favourite" element={<Favourite />} />
 
 
           </Routes>
