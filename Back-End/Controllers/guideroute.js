@@ -4,12 +4,13 @@ const Guide = require("../models/guidemodel");
 const uploadGuide = require("../middelware/multer");
 
 // POST - Create new guide
+// POST - Create new guide
 router.post("/guides", uploadGuide.single("photo"), async (req, res) => {
   try {
     const { name, email, phone, location, languages, experience, bio } = req.body;
 
     // Basic validation for required fields
-    if (!name || !email || !phone || !location || !experience || !bio) {
+    if (!name || !email || !phone || !location || !experience) {
       return res.status(400).json({ message: "Please provide all required fields" });
     }
 
@@ -28,7 +29,14 @@ router.post("/guides", uploadGuide.single("photo"), async (req, res) => {
     await guide.save();
 
     res.status(201).json(guide);  
+
   } catch (error) {
+    if (error.code === 11000 && error.keyPattern?.email) {
+      // ✅ Duplicate email error
+      return res.status(409).json({ message: "Email already in use. Please use a different email." });
+    }
+
+    // Other errors
     res.status(500).json({ message: "Error creating guide", error: error.message });
   }
 });

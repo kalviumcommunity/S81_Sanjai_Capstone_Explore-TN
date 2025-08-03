@@ -9,13 +9,11 @@ const CalendarCard = () => {
   const [festivals, setFestivals] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("Anni"); // Default fallback name
 
-  // Trip planning states
   const [tripStart, setTripStart] = useState(null);
   const [tripEnd, setTripEnd] = useState(null);
 
-  // Load saved trip dates from localStorage on mount
   useEffect(() => {
     const storedStart = localStorage.getItem('tripStart');
     const storedEnd = localStorage.getItem('tripEnd');
@@ -25,7 +23,6 @@ const CalendarCard = () => {
     }
   }, []);
 
-  // Save trip dates to localStorage when updated
   useEffect(() => {
     if (tripStart && tripEnd) {
       localStorage.setItem('tripStart', tripStart);
@@ -101,10 +98,9 @@ const CalendarCard = () => {
   return (
     <div className="calendar-container">
       {/* <div className="profile-section">
-        <FaUserCircle size={32} color="#b0b0b0" className="profile-icon" />
-        <span className="profile-name">{userName || "Anni"}</span>
+        <FaUserCircle size={48} color="#b0b0b0" className="profile-icon" />
+        <span className="profile-name">{userName}</span>
       </div> */}
-      
 
       <div className="calendar-wrapper">
         <Calendar
@@ -142,7 +138,6 @@ const CalendarCard = () => {
                     <strong className="festival-name">{festival.name}</strong>
                     <p className="festival-date">{month} - {festival.date.iso} 📅</p>
                   </div>
-                  <span className="date-icon"></span>
                 </div>
               ))
             ))}
@@ -151,7 +146,6 @@ const CalendarCard = () => {
           <p>No festivals found.</p>
         )}
 
-        
         {tripStart && tripEnd && (
           <div className="trip-saved-box">
             <h5>🧳 Your Trip Plan</h5>

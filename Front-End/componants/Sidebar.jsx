@@ -24,8 +24,17 @@ const Sidebar = () => {
 
   return (
     <div className="w-64 h-screen bg-gradient-to-b from-gray-900 to-gray-800 p-6 flex flex-col text-gray-400 relative space-y-10">
-      {/* Logo */}
-      <h1 className="text-2xl font-extrabold text-lime-400">Explore<span className="text-white">-TN</span></h1>
+      <div className="flex items-center space-x-3 mb-8">
+        <img
+          src="/Final_LOGO-removedbg.png"
+          alt="Explore-TN Logo"
+          className="w-10 h-10 object-contain"
+        />
+        <h1 className="text-2xl font-extrabold text-lime-400">
+          Explore<span className="text-white">-TN</span>
+        </h1>
+      </div>
+
 
       {/* Navigation Links */}
       <ul className="flex flex-col space-y-4">
@@ -46,7 +55,7 @@ const Sidebar = () => {
         <li>
           <Link to="/Favourite" className={`flex items-center space-x-4 py-3 px-4 rounded-xl cursor-pointer ${isActive("/Favourite")}`}>
             <FaBookmark size={22} />
-            <span className="text-lg">Favourite</span>
+            <span className="text-lg">Favourite's</span>
           </Link>
         </li>
 

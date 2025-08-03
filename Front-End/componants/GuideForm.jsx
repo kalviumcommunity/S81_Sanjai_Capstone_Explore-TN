@@ -15,6 +15,7 @@ const SimpleGuideForm = () => {
   });
 
   const [preview, setPreview] = useState(null);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -40,6 +41,8 @@ const SimpleGuideForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(''); // Clear any previous errors
+
     const form = new FormData();
     Object.entries(formData).forEach(([key, value]) => form.append(key, value));
 
@@ -52,24 +55,30 @@ const SimpleGuideForm = () => {
       const data = await res.json();
       console.log('Submitted:', data);
 
-      if (data && data._id) {
-        localStorage.setItem('guideId', data._id); // Save the guide ID in local storage
-        navigate(`/guides/${data._id}`); // Dynamically navigate to the new guide profile
+      if (res.status === 409) {
+        // Duplicate email handled by backend with 409 Conflict
+        setError(data.message || 'Email already in use.');
+        return;
+      }
+
+      if (res.ok && data && data._id) {
+        localStorage.setItem('guideId', data._id);
+        navigate(`/guides/${data._id}`);
       } else {
-        console.error("Guide ID not found. Cannot navigate to profile.");
+        setError(data.message || 'Something went wrong. Please try again.');
       }
     } catch (err) {
       console.error('Error:', err);
+      setError('Network error. Please try again later.');
     }
   };
 
   const handleGoBack = () => {
-    // Navigate to the guide profile if the guideId exists, else go back to the previous page
     const guideId = localStorage.getItem('guideId');
     if (guideId) {
       navigate(`/guides/${guideId}`);
     } else {
-      navigate(-1); // Fallback to previous page
+      navigate(-1);
     }
   };
 
@@ -80,6 +89,10 @@ const SimpleGuideForm = () => {
         className="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md text-white space-y-4"
       >
         <h2 className="text-2xl font-semibold text-center mb-2">Guide Sign Up</h2>
+
+        {error && (
+          <p className="text-red-500 text-sm text-center">{error}</p>
+        )}
 
         <input
           type="text"

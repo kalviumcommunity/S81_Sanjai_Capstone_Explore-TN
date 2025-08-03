@@ -259,3 +259,15 @@
   border-radius: 50%;
 }
 
+.react-calendar__navigation button:focus {
+  outline: none;
+  background-color: #A3E635 !important; /* Light lemon */
+  color: black !important;
+  border-radius: 8px;
+}
+
+.profile-section {
+  padding: 12px;
+  border: 2px solid #A3E635;
+  border-radius: 8px;
+}

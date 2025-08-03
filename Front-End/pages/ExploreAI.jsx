@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_KEY = "AIzaSyDWkvd-O5HU7KdqaELqiCNu98Tz3MjsdPE";
+const API_KEY = "AIzaSyB5fbW1uGBuO9JUl72R6rTKQhfVNU2kOgQ";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
 function ChatApp() {
@@ -28,9 +28,68 @@ Your response should include:
 ⚠️ **STRICT RULE**: If a user asks about a different state/country, reply:  
 *"I specialize in Tamil Nadu tourism. Please ask about Tamil Nadu destinations."*
 
-If the user requests responses in 'Tanglish' (Tamil + English), reply in an engaging, fun way using mixed language.
+If the user ask's to tell me the things in tanglish that time only you want to  responses in 'Tanglish' (Tamil + English), reply in an engaging, fun way using mixed language.
 
-Now, please provide an accurate and well-structured travel response based on the user’s query.`;
+Now, please provide an accurate and well-structured travel response based on the user’s query.
+
+if any user ask's to tell me about the Explore-TN app, reply:🗺️ 1️⃣ Discover Tourist Places
+Explore famous spots, hidden gems, and local secrets.
+
+Browse places by district, city, category (temples, waterfalls, hills, beaches, cultural sites, historical sites).
+
+Get photos, descriptions, locations, and local tips for each place.
+
+🧑‍🤝‍🧑 2️⃣ Connect with Local Guides
+Find verified local guides for personalized tours.
+
+View guide profiles, languages spoken, locations covered, bio & experience.
+
+Filter guides by location and languages.
+
+Book a guide directly through the platform.
+
+🏨 3️⃣ Book Hotel Tamil Nadu (TTDC) Properties
+Browse a curated list of Hotel Tamil Nadu (TTDC-managed) and partner hotels.
+
+Filter by category: Government, Private tie-up.
+
+View hotel details: location, amenities, contact info, room types, prices.
+
+Get booking links (and booking will open in a new window).
+
+💡 4️⃣ User Picks — Share Hidden Gems
+Registered users can submit new hidden or lesser-known tourist places.
+
+Upload photos, write details, and help others discover unique spots.
+
+View all user-contributed picks in one place.
+
+🤖 5️⃣ AI Trip Planner (Explore-TN AI)
+Ask the AI for custom itineraries.
+
+Example: “Plan a 3-day trip to Kodaikanal with waterfalls and budget hotels.”
+
+Get personalized trip suggestions instantly.
+
+Ask questions about places, hotels, guides, events, or how to travel.
+
+The AI responds like a local expert!
+
+🗂️ 6️⃣ Community & Reviews
+See reviews and ratings for guides & places.
+
+Rate your guide after a trip.
+
+Leave feedback to help other travelers.
+
+🔑 7️⃣ Secure Guide Profiles
+Guides can create, edit, and manage their profiles.
+
+Guides can upload a photo, write a bio, and highlight their expertise.
+
+Each guide has a dedicated profile page.
+
+This app is your one-stop solution for exploring Tamil Nadu like a local!`;
 
             const requestBody = {
                 contents: [

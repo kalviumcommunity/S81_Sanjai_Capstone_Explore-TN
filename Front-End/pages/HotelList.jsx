@@ -255,22 +255,13 @@ const HotelCard = ({ hotel, isFavorite, toggleFavorite }) => {
 
   return (
     <div className="bg-[#0B1120] rounded-2xl shadow-lg border border-gray-700 flex flex-col overflow-hidden transform transition duration-300 hover:scale-[1.02]">
-      {/* Image with proper cover */}
+      {/* Image */}
       <div className="relative overflow-hidden h-60">
         <img
           src={hotel.image}
           alt={hotel.name}
           className="w-full h-full object-cover"
         />
-        <button
-          onClick={() => toggleFavorite(hotel.id)}
-          className={`absolute top-3 right-3 text-3xl transition-transform duration-300 ${
-            isFavorite ? "text-yellow-400 scale-125" : "text-white scale-100"
-          }`}
-          title={isFavorite ? "Remove from favorites" : "Add to favorites"}
-        >
-          {isFavorite ? <MdOutlineBookmarkAdded /> : <MdOutlineBookmarkAdd />}
-        </button>
       </div>
 
       {/* Details */}
@@ -281,12 +272,25 @@ const HotelCard = ({ hotel, isFavorite, toggleFavorite }) => {
         <p className="text-lime-400 mb-4 text-sm font-semibold">
           Starts at: {hotel.starting_price}
         </p>
-        <button
-          onClick={handleBooking}
-          className="mt-auto w-full bg-lime-500 text-black py-3 rounded-lg font-semibold hover:bg-lime-600 transition shadow hover:shadow-md"
-        >
-          Book This Hotel
-        </button>
+
+        {/* Footer with button + bookmark */}
+        <div className="mt-auto flex items-center justify-between gap-4">
+          <button
+            onClick={handleBooking}
+            className="flex-grow bg-lime-500 text-black py-3 rounded-lg font-semibold hover:bg-lime-600 transition shadow hover:shadow-md"
+          >
+            Book This Hotel
+          </button>
+          <button
+            onClick={() => toggleFavorite(hotel.id)}
+            className={`text-3xl transition-transform duration-300 ${
+              isFavorite ? "text-yellow-400 scale-125" : "text-white scale-100"
+            }`}
+            title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          >
+            {isFavorite ? <MdOutlineBookmarkAdded /> : <MdOutlineBookmarkAdd />}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -317,7 +321,7 @@ const HotelList = () => {
       ? HOTELS
       : filter === "Favorites"
       ? HOTELS.filter((hotel) => favorites.includes(hotel.id))
-      : HOTELS.filter((hotel) => hotel.category === filter);
+      : HOTELS; // No other filter now since only Government hotels are included
 
   return (
     <div className="bg-[#0B1120] min-h-screen py-14 px-4 md:px-8 relative">
@@ -341,16 +345,15 @@ const HotelList = () => {
         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute right-10 top-1/2 transform -translate-y-1/2 bg-white text-gray-800 rounded-lg shadow-lg p-8 w-72 text-sm z-50">
           <p className="font-semibold mb-2">How We Guide You</p>
           <p>
-            We help you discover verified Hotel Tamil Nadu stays (TTDC-managed &
-            tie-up). Book directly through trusted links — we guide you to
-            official TTDC pages for safe reservations.
+            We help you discover verified Hotel Tamil Nadu stays (TTDC-managed).
+            Book directly through trusted links — we guide you to official TTDC pages for safe reservations.
           </p>
         </div>
       </div>
 
-      {/* Filter buttons */}
+      {/* Filter buttons (Tie-up removed) */}
       <div className="flex justify-center flex-wrap gap-4 mb-12">
-        {["All", "Government", "Tie-up", "Favorites"].map((cat) => (
+        {["All", "Favorites"].map((cat) => (
           <button
             key={cat}
             onClick={() => setFilter(cat)}

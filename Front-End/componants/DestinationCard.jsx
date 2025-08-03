@@ -11,7 +11,7 @@ const destinations = [
   { id: 5, name: "Salem", image: "https://t3.ftcdn.net/jpg/03/46/77/80/240_F_346778049_beFmFk61ShrmeRdasboUEs9hY6XsPqdr.jpg", path: "/salem" },
   { id: 6, name: "Coimbatore", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/mobile/valparai-1655317113_9a764f170250c439648c.webp", path: "Coimbatore" },
   { id: 7, name: "Namakkal", image: "https://media.istockphoto.com/id/1216022846/photo/kolli-hills-kollimalai-seventy-hairpin-bends-located-in-central-tamil-nadu-india.jpg?s=612x612&w=0&k=20&c=Zwa-SlGmibGqfMed5vvWBEfngRTrD-P-bHIuh3P6frU=", path: "/Namakal" },
-  { id: 8, name: "Theni", image: "https://www.kolukkumalai.com/gallery/g-0016-tn.jpg", path: "/Theni" },
+  { id: 8, name: "Theni", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvu8dkzwRYj22lK7qiYyrqcWJ3h1j_C3EHzQ&s", path: "/Theni" },
   { id: 9, name: "Coonoor", image: "https://media1.thrillophilia.com/filestore/f0ufvscjst2argui3nfh4ikavh7i_1556099835_shutterstock_657980620.jpg?w=753&h=450&dpr=1.0", path: "/Coonoor" },
 
   // Remaining districts with placeholder images
