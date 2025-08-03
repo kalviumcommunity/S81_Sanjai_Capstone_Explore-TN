@@ -41,14 +41,24 @@ const SimpleGuideForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Clear any previous errors
+    setError('');
 
     const form = new FormData();
     Object.entries(formData).forEach(([key, value]) => form.append(key, value));
 
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      setError('You must be logged in to submit.');
+      return;
+    }
+
     try {
       const res = await fetch('http://localhost:8000/Guide/guides', {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: form,
       });
 
@@ -56,7 +66,6 @@ const SimpleGuideForm = () => {
       console.log('Submitted:', data);
 
       if (res.status === 409) {
-        // Duplicate email handled by backend with 409 Conflict
         setError(data.message || 'Email already in use.');
         return;
       }
@@ -82,6 +91,9 @@ const SimpleGuideForm = () => {
     }
   };
 
+  const inputClasses =
+    'w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500';
+
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
       <form
@@ -101,7 +113,7 @@ const SimpleGuideForm = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400"
+          className={inputClasses}
         />
         <input
           type="email"
@@ -110,7 +122,7 @@ const SimpleGuideForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400"
+          className={inputClasses}
         />
         <input
           type="text"
@@ -119,7 +131,7 @@ const SimpleGuideForm = () => {
           value={formData.phone}
           onChange={handleChange}
           required
-          className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400"
+          className={inputClasses}
         />
         <input
           type="text"
@@ -128,7 +140,7 @@ const SimpleGuideForm = () => {
           value={formData.location}
           onChange={handleChange}
           required
-          className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400"
+          className={inputClasses}
         />
         <input
           type="text"
@@ -137,7 +149,7 @@ const SimpleGuideForm = () => {
           value={formData.languages}
           onChange={handleChange}
           required
-          className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400"
+          className={inputClasses}
         />
         <input
           type="number"
@@ -145,7 +157,7 @@ const SimpleGuideForm = () => {
           placeholder="Experience (years)"
           value={formData.experience}
           onChange={handleChange}
-          className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400"
+          className={inputClasses}
         />
         <textarea
           name="bio"
@@ -153,7 +165,7 @@ const SimpleGuideForm = () => {
           value={formData.bio}
           onChange={handleChange}
           rows={3}
-          className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 placeholder-gray-400"
+          className={inputClasses}
         />
 
         <div className="flex justify-center">

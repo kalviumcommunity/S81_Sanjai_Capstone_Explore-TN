@@ -121,66 +121,65 @@ function UserPicks() {
       </div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {filteredPicks.map((pick) => (
-          <div
-            key={pick._id}
-            className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 flex flex-col relative"
-          >
-            {/* Image */}
-            <div className="w-full h-48">
-              {pick.imageUrl ? (
-                <img
-                  src={pick.imageUrl}
-                  alt={pick.title}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                  <UserCircle size={48} className="text-gray-500" />
-                </div>
-              )}
-            </div>
-
-            {/* Content */}
-            <div className="p-4 flex flex-col flex-grow">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-1">{pick.title}</h2>
-              <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-2">
-                <span className="flex items-center gap-1">
-                  <MapPin size={14} /> {pick.location}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Folder size={14} /> {pick.category}
-                </span>
-              </div>
-              <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 line-clamp-2">
-                {pick.description || 'No description provided.'}
-              </p>
-              <div className="mt-auto text-xs text-gray-500 dark:text-gray-400">
-                Posted by: {pick.username || 'Anonymous'}
-              </div>
-            </div>
-
-            {/* Edit & Delete */}
-            {pick.userId === userId && (
-              <div className="absolute top-3 right-3 flex gap-2">
-                <button
-                  onClick={() => goToEditForm(pick._id)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full"
-                >
-                  <Pencil size={16} />
-                </button>
-                <button
-                  onClick={() => deletePick(pick._id)}
-                  className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-            )}
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+  {filteredPicks.map((pick) => (
+    <div
+      key={pick._id}
+      className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 flex flex-col relative"
+    >
+      <div className="w-full h-48">
+        {pick.imageUrl ? (
+          <img
+            src={pick.imageUrl}
+            alt={pick.title}
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+            <UserCircle size={48} className="text-gray-500" />
           </div>
-        ))}
+        )}
       </div>
+
+      <div className="p-4 flex flex-col flex-grow">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-1">{pick.title}</h2>
+        <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <span className="flex items-center gap-1">
+            <MapPin size={14} /> {pick.location}
+          </span>
+          <span className="flex items-center gap-1">
+            <Folder size={14} /> {pick.category}
+          </span>
+        </div>
+        <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 line-clamp-2">
+          {pick.description || 'No description provided.'}
+        </p>
+        <div className="mt-auto text-xs text-gray-500 dark:text-gray-400">
+          Posted by: {pick.username || 'Anonymous'}
+        </div>
+      </div>
+
+      {pick.userId === userId && (
+        <div className="absolute top-3 right-3 flex gap-2">
+          <button
+            onClick={() => goToEditForm(pick._id)}
+            className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full"
+          >
+            <Pencil size={16} />
+          </button>
+          <button
+            onClick={() => deletePick(pick._id)}
+            className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+
     </div>
   );
 }

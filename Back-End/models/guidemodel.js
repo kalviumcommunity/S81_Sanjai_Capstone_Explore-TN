@@ -31,7 +31,8 @@ const guideSchema = new mongoose.Schema({
     },
     photo: {
       type: String 
-    }
+    },
+     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 })
 
 const guideModel=mongoose.model("Guide",guideSchema)

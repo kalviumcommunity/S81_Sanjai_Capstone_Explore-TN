@@ -15,7 +15,14 @@ import UserPicks from "../pages/UserPicks";
 import Profile from "../pages/Profile";
 import HotelList from "../pages/HotelList";
 import Favourite from "../pages/FavoritesPage";
-
+import Chennai from "../Placepage/Chennai";
+import Coimbatore from "../Placepage/Coimbatore";
+import Dindigul from "../Placepage/Dindugal";
+import Madurai from "../Placepage/Madurai";
+import Namakkal from "../Placepage/Namakal";
+import Ooty from "../Placepage/Ooty";
+import Salem from "../Placepage/Salem";
+import Theni from "../Placepage/Theni"; // Importing the new Theni component
 function App() {
   return (
     <Router>
@@ -38,6 +45,16 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/hotels" element={<HotelList />} />
             <Route path="/Favourite" element={<Favourite />} />
+            <Route path="/Chennai" element={<Chennai />} />
+            <Route path="/Coimbatore" element={<Coimbatore />} />
+            <Route path="/Dindugal" element={<Dindigul />} />
+            <Route path="/Madurai" element={<Madurai />} />
+            <Route path="/Namakal" element={<Namakkal />} />
+            <Route path="/Ooty" element={<Ooty />} />
+            <Route path="/Salem" element={<Salem />} />
+            <Route path="/Theni" element={<Theni />} /> {/* Adding the new Theni route */}
+            {/* Add more routes as needed */}
+            
 
 
           </Routes>
