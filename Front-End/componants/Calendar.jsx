@@ -36,7 +36,7 @@ const CalendarCard = () => {
     const fetchFestivals = async () => {
       try {
         const response = await fetch(
-          `https://calendarific.com/api/v2/holidays?api_key=c9E67RjySnoU6ZRuB4Z8pLF3uvATzNag&country=IN&year=2025`
+          `https://calendarific.com/api/v2/holidays?api_key=aF7kqR1au14XsFoSF8dmwLLHRgRLAG1B`
         );
 
         if (!response.ok) throw new Error(`Failed to fetch festivals`);

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { MdDelete } from "react-icons/md";
 
 const HOTELS = [
+  
   {
     id: 1,
     name: "Hotel Tamil Nadu Beach Resort - Mamallapuram",
@@ -242,58 +245,158 @@ const HOTELS = [
     bookingURL: "https://www.ttdconline.com"
   }
 ];
+
+
+
+
 const FavoritesPage = () => {
-  const [favorites, setFavorites] = useState([]);
+  const [activeTab, setActiveTab] = useState("hotels");
+  const [favoriteHotelIds, setFavoriteHotelIds] = useState([]);
+  const [favoritePlaces, setFavoritePlaces] = useState([]);
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("favorites")) || [];
-    setFavorites(stored);
-  }, []);
+    // ✅ Load hotel IDs from localStorage
+    const storedHotels = JSON.parse(localStorage.getItem("favorites")) || [];
+    setFavoriteHotelIds(storedHotels);
 
-  const favHotels = HOTELS.filter((hotel) => favorites.includes(hotel.id));
+    // ✅ Load favorite places from backend
+    if (token) {
+      axios
+        .get("http://localhost:8000/User/favorites", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setFavoritePlaces(res.data);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [token]);
+
+  const favHotels = HOTELS.filter((hotel) =>
+    favoriteHotelIds.includes(hotel.id)
+  );
+
+  // ✅ Remove hotel from localStorage
+  const handleDeleteHotel = (id) => {
+    const updated = favoriteHotelIds.filter((hid) => hid !== id);
+    setFavoriteHotelIds(updated);
+    localStorage.setItem("favorites", JSON.stringify(updated));
+  };
+
+  // ✅ Remove place from backend
+  const handleDeletePlace = async (name) => {
+    if (!token) {
+      alert("Please login");
+      return;
+    }
+    try {
+      const res = await axios.delete(
+        `http://localhost:8000/User/favorites/${name}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setFavoritePlaces(res.data); // ✅ backend returns updated list
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete favorite");
+    }
+  };
 
   return (
     <div className="bg-[#0B1120] min-h-screen py-12 px-4 md:px-8">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-12 text-center">
-        My Favorite Hotels
+      <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-8 text-center">
+        My Favorites
       </h1>
 
-      {favHotels.length === 0 ? (
-        <p className="text-white text-center text-lg">
-          No favorites added yet!
-        </p>
-      ) : (
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {favHotels.map((hotel) => (
-            <div
-              key={hotel.id}
-              className="bg-[#10172A] rounded-2xl shadow-lg overflow-hidden border border-[#1E293B] flex flex-col transition-transform duration-300 hover:scale-[1.02]"
-            >
-              <div className="relative">
+      <div className="flex justify-center mb-8">
+        <button
+          onClick={() => setActiveTab("hotels")}
+          className={`px-6 py-2 rounded-l-full ${
+            activeTab === "hotels"
+              ? "bg-lime-500 text-black"
+              : "bg-gray-800 text-white"
+          }`}
+        >
+          Hotels
+        </button>
+        <button
+          onClick={() => setActiveTab("places")}
+          className={`px-6 py-2 rounded-r-full ${
+            activeTab === "places"
+              ? "bg-lime-500 text-black"
+              : "bg-gray-800 text-white"
+          }`}
+        >
+          Places
+        </button>
+      </div>
+
+      {activeTab === "hotels" ? (
+        favHotels.length === 0 ? (
+          <p className="text-white text-center text-lg">
+            No favorite hotels yet!
+          </p>
+        ) : (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {favHotels.map((hotel) => (
+              <div
+                key={hotel.id}
+                className="bg-[#10172A] rounded-2xl shadow-lg overflow-hidden border border-[#1E293B] flex flex-col transition-transform duration-300 hover:scale-[1.02] relative"
+              >
+                <button
+                  onClick={() => handleDeleteHotel(hotel.id)}
+                  className="absolute top-57 right-6 text-red-500 text-4xl hover:text-red-700"
+                >
+                  <MdDelete />
+                </button>
                 <img
                   src={hotel.image}
                   alt={hotel.name}
                   className="w-full h-52 object-cover"
                 />
-                {/* Bookmark icon can go here if you want */}
+                <div className="p-6 flex flex-col flex-grow text-white">
+                  <h2 className="text-lg md:text-xl font-bold mb-1">
+                    {hotel.name}
+                  </h2>
+                  <p className="text-gray-300 mb-1 text-sm">{hotel.city}</p>
+                  <p className="text-gray-400 mb-2 text-xs">{hotel.address}</p>
+                  <p className="text-lime-400 font-semibold mb-4">
+                    Starts at: {hotel.starting_price}
+                  </p>
+                  <a
+                    href={hotel.bookingURL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-auto w-full text-center bg-lime-500 text-black py-3 rounded-md font-semibold hover:bg-lime-600 transition-all duration-200"
+                  >
+                    Book This Hotel
+                  </a>
+                </div>
               </div>
-
-              <div className="p-6 flex flex-col flex-grow text-white">
-                <h2 className="text-lg md:text-xl font-bold mb-1">{hotel.name}</h2>
-                <p className="text-gray-300 mb-1 text-sm">{hotel.city}</p>
-                <p className="text-gray-400 mb-2 text-xs">{hotel.address}</p>
-                <p className="text-lime-400 font-semibold mb-4">
-                  Starts at: {hotel.starting_price}
-                </p>
-                <a
-                  href={hotel.bookingURL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-auto w-full text-center bg-lime-500 text-black py-3 rounded-md font-semibold hover:bg-lime-600 transition-all duration-200"
-                >
-                  Book This Hotel
-                </a>
-              </div>
+            ))}
+          </div>
+        )
+      ) : favoritePlaces.length === 0 ? (
+        <p className="text-white text-center text-lg">
+          No favorite places yet!
+        </p>
+      ) : (
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {favoritePlaces.map((name, index) => (
+            <div
+              key={index}
+              className="bg-[#10172A] rounded-2xl shadow-lg overflow-hidden border border-[#1E293B] flex flex-col p-6 text-white relative"
+            >
+              <button
+                onClick={() => handleDeletePlace(name)}
+                className="absolute top-6 right-4 text-red-500 text-4xl hover:text-red-700"
+              >
+                <MdDelete />
+              </button>
+              <h2 className="text-lg md:text-xl font-bold mb-2">{name}</h2>
             </div>
           ))}
         </div>

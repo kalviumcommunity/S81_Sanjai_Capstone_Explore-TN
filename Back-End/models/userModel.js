@@ -25,7 +25,9 @@ const userSchema=mongoose.Schema({
     isActivated: {
         type: Boolean,
         default: false
-    }
+    },
+    favorites: [{ type: String }]
+
 })
 
 

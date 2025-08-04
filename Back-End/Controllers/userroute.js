@@ -99,6 +99,51 @@ router.get("/users/:id", catchAsyncError(async (req, res, next) => {
   });
 }));
 
+// ✅ Get current user's favorites
+router.get("/favorites", isAuthenticatedUser, catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  res.status(200).json(user.favorites || []);
+}));
+
+router.post("/favorites", isAuthenticatedUser, catchAsyncError(async (req, res, next) => {
+  const { name } = req.body;
+
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
+  }
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const alreadyFavorited = user.favorites.includes(name);
+
+  if (alreadyFavorited) {
+    // Remove it
+    user.favorites = user.favorites.filter((n) => n !== name);
+  } else {
+    // Add it
+    user.favorites.push(name);
+  }
+
+  await user.save();
+  res.status(200).json(user.favorites);
+}));
+
+
+// DELETE a single favorite by name
+router.delete("/favorites/:name", isAuthenticatedUser, async (req, res) => {
+  const { name } = req.params;
+
+  const user = await User.findById(req.user._id);
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  user.favorites = user.favorites.filter(n => n !== name);
+  await user.save();
+
+  res.status(200).json(user.favorites); // ✅ return updated list
+});
 
 
 router.delete("/user/:id", catchAsyncError(async (req, res, next) => {
