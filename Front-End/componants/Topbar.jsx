@@ -46,10 +46,10 @@ const Topbar = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#0c1220] text-white shadow-md">
-      <div className="flex flex-col md:flex-row items-center justify-between px-6 py-4 gap-4">
+      <div className="flex flex-col md:flex-row items-center justify-between px-6 py-4 gap-6">
 
         {/* Search Bar */}
-        <div className="flex w-full md:w-[65%] lg:w-[70%] xl:w-[75%] relative">
+        <div className="flex w-full md:w-[65%] lg:w-[70%] xl:w-[76%] relative">
           <input
             type="text"
             placeholder="Search for your favourite destination"

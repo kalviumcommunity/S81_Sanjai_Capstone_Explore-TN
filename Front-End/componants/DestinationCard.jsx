@@ -1,6 +1,7 @@
 import React from "react";
 import { LuSquareArrowOutUpRight } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import './DestinationCard.css';
 
 const destinations = [
   // Your original 9 destinations
@@ -51,53 +52,47 @@ const DestinationCard = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto px-5 py-1">
-      <h2 className="text-3xl font-bold mb-2.5 text-gray-100 text-left">
-        Popular Destinations in TAMIL NADU
-      </h2>
+    <div className="destination-container container mx-auto px-5 py-1">
+  <h2 className="text-3xl font-bold mb-2.5 text-gray-100 text-left">
+    Popular Destinations in TAMIL NADU
+  </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 py-4">
-        {destinations.map((destination) => (
-          <div
-            key={destination.id}
-            className="bg-gray-900 rounded-xl shadow-lg overflow-hidden transform transition hover:shadow-2xl"
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 py-4">
+    {destinations.map((destination) => (
+      <div key={destination.id} className="bg-gray-900 rounded-xl shadow-lg overflow-hidden transform transition hover:shadow-2xl">
+        <div className="overflow-hidden">
+          <img
+            src={destination.image}
+            alt={destination.name}
+            className="w-full h-46 object-cover transition-transform duration-300 hover:scale-110"
+            onError={(e) =>
+              (e.target.src = "https://via.placeholder.com/300x200?text=No+Image")
+            }
+          />
+        </div>
+        <div className="p-4 flex flex-col flex-grow">
+          <h3 className="text-lg font-semibold text-white">{destination.name}</h3>
+        </div>
+        <hr className="border-gray-700 w-full" />
+        <div className="relative group flex justify-center">
+          <button
+            className="w-full cursor-pointer text-white py-2 relative overflow-hidden transition-all duration-300 flex items-center justify-center gap-2"
+            onClick={() => navigate(destination.path)}
           >
-            <div className="overflow-hidden">
-              <img
-                src={destination.image}
-                alt={destination.name}
-                className="w-full h-46 object-cover transition-transform duration-300 hover:scale-110"
-                onError={(e) =>
-                  (e.target.src = "https://via.placeholder.com/300x200?text=No+Image")
-                }
-              />
-            </div>
-            <div className="p-4 flex flex-col flex-grow">
-              <h3 className="text-lg font-semibold text-white">{destination.name}</h3>
-            </div>
-            <hr className="border-gray-700 w-full" />
-            <div className="relative group flex justify-center ">
-              <button
-                className="w-full cursor-pointer text-white py-2 relative overflow-hidden transition-all duration-300 flex items-center justify-center gap-2"
-                onClick={() => navigate(destination.path)}
-              >
-                <span className="relative z-10 flex  items-center gap-2">
-                  <span className="group-hover:text-black group-hover:font-bold transition-all  duration-300 ">
-                    Explore Now
-                  </span>
-                  <LuSquareArrowOutUpRight className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-black" />
-                </span>
-                <span className="absolute inset-0 bg-lime-500 scale-y-0 origin-bottom transition-transform duration-300 group-hover:scale-y-100"></span>
-              </button>
-            </div>
-          </div>
-        ))}
+            <span className="relative z-10 flex items-center gap-2">
+              <span className="group-hover:text-black group-hover:font-bold transition-all duration-300">
+                Explore Now
+              </span>
+              <LuSquareArrowOutUpRight className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-black" />
+            </span>
+            <span className="absolute inset-0 bg-lime-500 scale-y-0 origin-bottom transition-transform duration-300 group-hover:scale-y-100"></span>
+          </button>
+        </div>
       </div>
+    ))}
+  </div>
+</div>
 
-      <div className="mt-3 flex justify-center">
-        
-      </div>
-    </div >
   );
 };
 

@@ -1,23 +1,29 @@
+/* =================== Calendar Sidebar =================== */
 .calendar-container {
   position: fixed;
-  right: 0;
+  right: 0px;
   top: 80px;
-  width: 21%;
-  height: 100vh; /* Full screen height */
+  width: 22%;
+  height: calc(100vh - 80px);
   background-color: #0c1220;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 10px;
-  /* box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.3); */
+  overflow-y: auto;
+  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* =================== Profile Section =================== */
 .profile-section {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
   justify-content: center;
   width: 100%;
+  padding: 12px;
+  border: 2px solid #A3E635;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .profile-icon {
@@ -30,28 +36,19 @@
   color: white;
 }
 
-.calendar-heading {
-  text-align: center;
-  font-weight: bold;
-  font-size: 13px;
-  text-transform: uppercase;
-  color: #a9a9a9;   
-  margin-bottom: 8px;
-}
-
+/* =================== Calendar =================== */
 .calendar-wrapper {
   width: 90%;
-  max-height: 330px; /* Reduce height for a compact look */
-  overflow: hidden;
-}
-
-.calendar-wrapper .react-calendar {
-  width: 100%;
-  height: auto; /* Allow it to adjust */
   background-color: #1b2340;
-  border: none;
   border-radius: 16px;
   padding: 10px;
+  margin-bottom: 20px;
+}
+
+.react-calendar {
+  width: 100%;
+  background-color: #1b2340;
+  border: none;
   color: white;
   font-size: 13px;
 }
@@ -60,7 +57,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .react-calendar__navigation button {
@@ -70,98 +67,70 @@
   text-transform: uppercase;
   font-size: 11px;
   padding: 5px;
+  cursor: pointer;
 }
 
-.react-calendar__tile--active {
-  background: #ff6c4d !important; /* Orange background */
-  color: black !important; /* Change text to black */
-  font-weight: bold;
-  border-radius: 50%;
-}
-
-.react-calendar__navigation button:hover {
-  background-color: #FF6C4D !important; /* Orange color */
-  color: white !important; /* Ensure text is visible */
+.react-calendar__navigation button:hover,
+.react-calendar__navigation button:focus {
+  background-color: #A3E635 !important;
+  color: black !important;
   border-radius: 8px;
   transition: 0.3s ease-in-out;
+  outline: none;
 }
-
-.react-calendar__month-view__months__month:hover {
-   /* Orange color */
-  color: white !important;
-  border-radius: 8px;
-  transition: 0.3s ease-in-out;
-}
-
 
 .react-calendar__tile {
   border-radius: 50%;
-  width: 40px; /* Circular shape */
+  width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
   font-weight: bold;
-  /* color: white; */
 }
 
 .react-calendar__tile--active {
-  /* background: #ff6c4d !important; */
   background-color: #A3E635 !important;
-  font-weight: bold;
+  color: black !important;
+}
+
+.react-calendar__tile--now {
+  background-color: #ff6c4d !important;
+  color: white !important;
 }
 
 .react-calendar__tile:hover {
-  background: none !important;
-  color: none !important;
+  background: #353c4a !important;
+  color: white !important;
   border-radius: 50%;
   transition: 0.3s ease-in-out;
 }
 
-
-.booking-section {
-  width: 90%;
-  height: 50%;
-  background-color: #1b2340;
-  padding: 12px;
-  border-radius: 12px;
-  margin-top: 16px;
-  box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.1);
+.trip-date {
+  background-color: #FFA500 !important;
+  color: white !important;
+  border-radius: 50%;
 }
 
-.booking-section h5 {
-  color: white;
-  margin-bottom: 6px;
-  font-size: 13px;
+.weekend-day {
+  color: #FF4444;
 }
 
-.booking-section p {
-  color: #9c9c9c;
-  font-size: 12px;
-}
-
-/* Responsive Fix */
-@media (max-width: 768px) {
-  .calendar-container {
-    width: 100%;
-    position: relative;
-  }
-}
-
+/* =================== Festival Section =================== */
 .festival-section {
+  width: 90%;
   background: #1b2340;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  width: 86%;
-  max-width: 380px;
-  position: absolute;
-  bottom: 110px;
-  right: 25px;
   color: white;
-  
-  
+  max-width: 100%;
+  overflow-x: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .festival-section h5 {
@@ -172,23 +141,41 @@
   margin-bottom: 15px;
 }
 
-/* Festival list (single container) */
 .festival-list {
+  flex-grow: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-right: 4px;
 }
 
-/* Festival card (each entry) */
+/* ⭐⭐ NEW: Slim Scrollbar Styling ⭐⭐ */
+.festival-list::-webkit-scrollbar {
+  width: 0px;
+}
+
+.festival-list::-webkit-scrollbar-track {
+  background: #1b2340;
+}
+
+.festival-list::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 3px;
+}
+
+.festival-list::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
+
+/* =================== Festival Card =================== */
 .festival-card {
-  background: #2a303c;
-  padding: 12px;
+  background: #1f2937;
+  padding: 10px;
   border-radius: 8px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #fff;
+  flex-direction: column;
+  justify-content: center;
   transition: 0.3s ease;
 }
 
@@ -196,35 +183,20 @@
   background: #353c4a;
 }
 
-/* Festival name */
 .festival-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   color: #f8f9fa;
 }
 
-/* Festival date */
 .festival-date {
-  font-size: 14px;
+  font-size: 13px;
   color: #b0b0b0;
-  margin-top: 4px;
 }
 
-/* Date icon */
-.date-icon {
-  font-size: 18px;
-  color:  #FF6C4D;
-}
-
-
-.trip-date {
-  background-color:  #FF6C4D !important; /* pink highlight */
-  color: white !important;
-  border-radius: 50%;
-}
-
+/* =================== Trip Plan =================== */
 .trip-saved-box {
-  background-color:  #0c1220;
+  background-color: #0c1220;
   padding: 12px;
   margin-top: 16px;
   border-left: 4px solid #f06292;
@@ -237,37 +209,12 @@
   color: #d81b60;
 }
 
-
-.section {
-  background-color:  #0c1220;
-  padding: 16px;
-  margin: 16px 0;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.calendar-section {
-  border-left: 4px solid #2196f3;
-}
-
-
-
-
-.trip-date {
-  background-color:  #FF6C4D !important;
-  color: white !important;
-  border-radius: 50%;
-}
-
-.react-calendar__navigation button:focus {
-  outline: none;
-  background-color: #A3E635 !important; /* Light lemon */
-  color: black !important;
-  border-radius: 8px;
-}
-
-.profile-section {
-  padding: 12px;
-  border: 2px solid #A3E635;
-  border-radius: 8px;
+/* =================== Responsive =================== */
+@media (max-width: 1024px) {
+  .calendar-container {
+    width: 100%;
+    position: relative;
+    box-shadow: none;
+    height: auto;
+  }
 }

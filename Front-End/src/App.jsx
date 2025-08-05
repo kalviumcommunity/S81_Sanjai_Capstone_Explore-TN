@@ -22,7 +22,9 @@ import Madurai from "../Placepage/Madurai";
 import Namakkal from "../Placepage/Namakal";
 import Ooty from "../Placepage/Ooty";
 import Salem from "../Placepage/Salem";
-import Theni from "../Placepage/Theni"; // Importing the new Theni component
+import Theni from "../Placepage/Theni";
+import PrivateRoute from "../componants/PrivateRoute"; // ✅ Import
+
 function App() {
   return (
     <Router>
@@ -31,20 +33,11 @@ function App() {
         <div className="flex-1 flex flex-col overflow-y-scroll">
           <Topbar />
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<Login />}/>
-            <Route path="/signup" element={<Signup />}/>
-           
-            <Route path="/Guides" element={<Guides />}/>
-            <Route path="/Explore-ai" element={<ChatApp />}/>
-            <Route path="/GuideForm" element={<SimpleGuideForm />}/>
-            <Route  path="/guides/:id" element={<GuideProfile />}/>
-            <Route path="/guides/:id/edit" element={<GuideEdit />} />
-            <Route path="/UserPickForm" element={<UserPickForm />} />
-            <Route path="/UserPick" element={<UserPicks />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/hotels" element={<HotelList />} />
-            <Route path="/Favourite" element={<Favourite />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/Explore-ai" element={<ChatApp />} />
             <Route path="/Chennai" element={<Chennai />} />
             <Route path="/Coimbatore" element={<Coimbatore />} />
             <Route path="/Dindugal" element={<Dindigul />} />
@@ -52,11 +45,18 @@ function App() {
             <Route path="/Namakal" element={<Namakkal />} />
             <Route path="/Ooty" element={<Ooty />} />
             <Route path="/Salem" element={<Salem />} />
-            <Route path="/Theni" element={<Theni />} /> {/* Adding the new Theni route */}
-            {/* Add more routes as needed */}
-            
+            <Route path="/Theni" element={<Theni />} />
+            <Route path="/hotels" element={<HotelList />} />
 
-
+            {/* Protected Routes */}
+            <Route path="/Guides" element={<PrivateRoute><Guides /></PrivateRoute>} />
+            <Route path="/GuideForm" element={<PrivateRoute><SimpleGuideForm /></PrivateRoute>} />
+            <Route path="/guides/:id" element={<PrivateRoute><GuideProfile /></PrivateRoute>} />
+            <Route path="/guides/:id/edit" element={<PrivateRoute><GuideEdit /></PrivateRoute>} />
+            <Route path="/UserPickForm" element={<PrivateRoute><UserPickForm /></PrivateRoute>} />
+            <Route path="/UserPick" element={<PrivateRoute><UserPicks /></PrivateRoute>} />
+            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path="/Favourite" element={<PrivateRoute><Favourite /></PrivateRoute>} />
           </Routes>
         </div>
       </div>

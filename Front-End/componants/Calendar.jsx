@@ -3,13 +3,11 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyles.css';
 import { FaUserCircle } from 'react-icons/fa';
+import tamilNaduFestivals from './festivalsData'; // ✅ new import
 
 const CalendarCard = () => {
   const [date, setDate] = useState(new Date());
-  const [festivals, setFestivals] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [userName, setUserName] = useState("Anni"); // Default fallback name
+  const [userName, setUserName] = useState("Anni");
 
   const [tripStart, setTripStart] = useState(null);
   const [tripEnd, setTripEnd] = useState(null);
@@ -25,61 +23,10 @@ const CalendarCard = () => {
 
   useEffect(() => {
     if (tripStart && tripEnd) {
-      localStorage.setItem('tripStart', tripStart);
-      localStorage.setItem('tripEnd', tripEnd);
+      localStorage.setItem('tripStart', tripStart.toISOString());
+      localStorage.setItem('tripEnd', tripEnd.toISOString());
     }
   }, [tripStart, tripEnd]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchFestivals = async () => {
-      try {
-        const response = await fetch(
-          `https://calendarific.com/api/v2/holidays?api_key=aF7kqR1au14XsFoSF8dmwLLHRgRLAG1B`
-        );
-
-        if (!response.ok) throw new Error(`Failed to fetch festivals`);
-
-        const data = await response.json();
-
-        if (isMounted && data.response.holidays) {
-          const tamilNaduFestivals = data.response.holidays
-            .filter(festival =>
-              [
-                "Puthandu",
-                "Chithirai Festival",
-                "Vaikasi Visakam",
-                "Aadi Perukku",
-                "Vinayaka Chaturthi",
-                "Ayudha Puja",
-                "Saraswati Puja",
-                "Vijaya Dasami",
-                "Deepavali",
-              ].some(f => festival.name.toLowerCase().includes(f.toLowerCase()))
-            )
-            .reduce((acc, festival) => {
-              const month = new Date(festival.date.iso).toLocaleString('en-US', { month: 'long' });
-              if (!acc[month]) acc[month] = [];
-              acc[month].push(festival);
-              return acc;
-            }, {});
-
-          setFestivals(tamilNaduFestivals);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Festival Fetch Error:", error.message);
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchFestivals();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const handleCalendarClick = (selectedDate) => {
     if (!tripStart || (tripStart && tripEnd)) {
@@ -95,13 +42,18 @@ const CalendarCard = () => {
     setDate(selectedDate);
   };
 
+  // ✅ Group festivals by month
+  const groupedFestivals = tamilNaduFestivals.reduce((acc, festival) => {
+    const month = new Date(festival.date).toLocaleString('en-US', { month: 'long' });
+    if (!acc[month]) acc[month] = [];
+    acc[month].push(festival);
+    return acc;
+  }, {});
+
   return (
     <div className="calendar-container">
-      {/* <div className="profile-section">
-        <FaUserCircle size={48} color="#b0b0b0" className="profile-icon" />
-        <span className="profile-name">{userName}</span>
-      </div> */}
 
+      {/* Calendar Section */}
       <div className="calendar-wrapper">
         <Calendar
           onChange={handleCalendarClick}
@@ -123,29 +75,27 @@ const CalendarCard = () => {
         />
       </div>
 
+      {/* Festival List Section */}
       <div className="festival-section">
-        <h5>Festivals</h5>
-        {loading ? (
-          <p>Loading festival data...</p>
-        ) : error ? (
-          <p className="error-text">⚠️ {error}</p>
-        ) : Object.keys(festivals).length > 0 ? (
+        <h5>Festivals in Tamil Nadu - 2025</h5>
+        {Object.keys(groupedFestivals).length > 0 ? (
           <div className="festival-list">
-            {Object.entries(festivals).map(([month, festivalList]) => (
+            {Object.entries(groupedFestivals).map(([month, festivalList]) =>
               festivalList.map((festival, index) => (
                 <div key={index} className="festival-card">
                   <div className="festival-info">
                     <strong className="festival-name">{festival.name}</strong>
-                    <p className="festival-date">{month} - {festival.date.iso} 📅</p>
+                    <p className="festival-date">{month} - {festival.date} 📅</p>
                   </div>
                 </div>
               ))
-            ))}
+            )}
           </div>
         ) : (
           <p>No festivals found.</p>
         )}
 
+        {/* Trip Plan Box */}
         {tripStart && tripEnd && (
           <div className="trip-saved-box">
             <h5>🧳 Your Trip Plan</h5>
