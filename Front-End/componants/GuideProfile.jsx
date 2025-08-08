@@ -10,7 +10,7 @@ import {
   FaEdit,
   FaTrash
 } from 'react-icons/fa';
-import BASE_URL from '../baseURL'; // ✅ Import base URL
+import BASE_URL from '../src/baseURL'; // ✅ Import base URL
 
 const GuideProfile = () => {
   const { id } = useParams();
@@ -134,7 +134,7 @@ const GuideProfile = () => {
         {guide.photo && (
           <div className="flex justify-center items-center flex-shrink-0">
             <img
-  src={`${BASE_URL}/uploads/${guide.photo}`}
+  src={`${BASE_URL}${guide.photo}`}
   alt="Guide"
   className="rounded-2xl w-72 h-72 object-cover border border-cyan-500 shadow-lg"
 />
