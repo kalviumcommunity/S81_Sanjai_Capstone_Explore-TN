@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from 'react-icons/md';
+import BASE_URL from '../src/baseURL'; // ✅ imported base URL
 
 // ✅ Card
 const Card = ({ title, content, image, isFavorite, onToggleFavorite }) => {
@@ -92,7 +93,7 @@ function Chennai() {
 
   useEffect(() => {
     if (token) {
-      axios.get("http://localhost:8000/User/favorites", {
+      axios.get(`${BASE_URL}/User/favorites`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => {
@@ -110,7 +111,8 @@ function Chennai() {
 
   try {
     const res = await axios.post(
-      "http://localhost:8000/User/favorites",
+  `${BASE_URL}/User/favorites`,
+
       { name: title }, // ✅ must match backend
       { headers: { Authorization: `Bearer ${token}` } }
     );
