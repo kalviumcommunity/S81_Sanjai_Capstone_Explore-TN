@@ -5,7 +5,7 @@ const cors = require('cors');
 
 // ✅ CORS config – allow only your frontend
 app.use(cors({
-  origin: 'https://explore-tnoffical.netlify.app', // Netlify frontend
+  origin: 'https://explore-tnoffcial.netlify.app/', // Netlify frontend
   credentials: true, // needed if using cookies/auth
 }));
 
