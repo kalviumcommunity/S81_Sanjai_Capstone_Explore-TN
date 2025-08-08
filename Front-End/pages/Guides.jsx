@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUserCircle, FaStar } from 'react-icons/fa';
+import BASE_URL from '../src/baseURL'; // ✅ imported base URL
 
 function Guides() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Guides() {
   useEffect(() => {
     const fetchGuides = async () => {
       try {
-        const res = await fetch('http://localhost:8000/Guide/guides');
+        const res = await fetch(`${BASE_URL}/Guide/guides`);
         const data = await res.json();
         setGuides(data);
       } catch (error) {
@@ -115,7 +116,7 @@ function Guides() {
             <div className="w-55 h-55 rounded-lg overflow-hidden flex-shrink-0">
               {guide.photo ? (
                 <img
-                  src={`http://localhost:8000${guide.photo}`}
+                  src={`${BASE_URL}${guide.photo}`}
                   alt="Guide"
                   className="w-full h-full object-cover"
                 />

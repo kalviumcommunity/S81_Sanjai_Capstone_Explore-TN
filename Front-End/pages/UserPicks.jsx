@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Folder, UserCircle, Trash2, Pencil } from 'lucide-react';
-
+import BASE_URL from '../src/baseURL'; // ✅ imported base URL
 function UserPicks() {
   const navigate = useNavigate();
   const [userPicks, setUserPicks] = useState([]);
@@ -12,7 +12,7 @@ function UserPicks() {
   useEffect(() => {
     const fetchUserPicks = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/user-picks/get');
+        const res = await fetch(`${BASE_URL}/api/user-picks/get`);
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
         const data = await res.json();
         setUserPicks(data);
@@ -40,7 +40,7 @@ function UserPicks() {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/UserPick/picks/${id}`, {
+      const res = await fetch(`${BASE_URL}/UserPick/picks/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {

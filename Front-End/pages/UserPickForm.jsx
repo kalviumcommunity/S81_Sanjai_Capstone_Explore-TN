@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCamera } from 'react-icons/fa';
+import BASE_URL from '../src/baseURL'; // ✅ imported base URL
 
 const UserPickForm = () => {
     const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ const UserPickForm = () => {
         Object.entries(formData).forEach(([key, value]) => form.append(key, value));
 
         try {
-            const res = await fetch('http://localhost:8000/api/user-picks/Post', {
+            const res = await fetch(`${BASE_URL}/api/user-picks/Post`, {
 
                 method: 'POST',
                 body: form,

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { MdDelete } from "react-icons/md";
+import BASE_URL from '../src/baseURL'; // ✅ imported base URL
+
 
 const HOTELS = [
   
@@ -264,7 +266,7 @@ const FavoritesPage = () => {
     // ✅ Load favorite places from backend
     if (token) {
       axios
-        .get("http://localhost:8000/User/favorites", {
+        .get(`${BASE_URL}/User/favorites`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
@@ -293,7 +295,7 @@ const FavoritesPage = () => {
     }
     try {
       const res = await axios.delete(
-        `http://localhost:8000/User/favorites/${name}`,
+        `${BASE_URL}/User/favorites/${name}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

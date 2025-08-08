@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import BASE_URL from '../src/baseURL';
 
 const GuideEdit = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const GuideEdit = () => {
   useEffect(() => {
     const fetchGuide = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/Guide/guides/${id}`);
+        const res = await fetch(`${BASE_URL}/Guide/guides/${id}`);
         const data = await res.json();
         setGuide(data);
       } catch (error) {
@@ -34,7 +35,7 @@ const GuideEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`http://localhost:8000/Guide/guides/${id}`, {
+      await fetch(`${BASE_URL}/Guide/guides/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(guide),

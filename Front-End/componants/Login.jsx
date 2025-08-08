@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios"; // ✅ Import axios
+import BASE_URL from "../src/baseURL"; // ✅ Import your base URL
+
+const API = axios.create({ baseURL: BASE_URL }); // ✅ Create API instance
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -8,37 +12,26 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:8000/User/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const res = await API.post("/User/login", form); // ✅ Use instance
+      const data = res.data;
 
-      const data = await res.json();
+      alert("Login successful!");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-      if (res.ok) {
-        alert("Login successful!");
-
-        // ✅ Correctly save the token and user
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-        navigate("/"); // redirect to dashboard or homepage
-      } else {
-        alert(data.message || "Invalid credentials");
-      }
+      navigate("/"); // Go to home
     } catch (error) {
       console.error("Login error:", error);
-      alert("Server error. Please try again.");
+      const message =
+        error.response?.data?.message || "Server error. Please try again.";
+      alert(message);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex justify-center items-center min-h-screen">
       <div className="bg-white w-full max-w-sm p-6 rounded-xl shadow-lg">
-        {/* Header Toggle */}
+        {/* Header Tabs */}
         <div className="flex justify-between items-center border-b pb-3 mb-4 gap-2">
           <button className="w-1/2 text-center text-white bg-blue-600 py-2 rounded-lg">
             Login

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import BASE_URL from "../src/baseURL";
 const Profile = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
@@ -17,7 +17,7 @@ const Profile = () => {
       }
 
       try {
-        const res = await fetch("http://localhost:8000/User/profile", {
+        const res = await fetch(`${BASE_URL}/User/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

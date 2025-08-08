@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCamera } from 'react-icons/fa';
-
+import BASE_URL from '../src/baseURL';
 const SimpleGuideForm = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -54,7 +54,8 @@ const SimpleGuideForm = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/Guide/guides', {
+      const res = await fetch(`${BASE_URL}/Guide/guides`, {
+
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

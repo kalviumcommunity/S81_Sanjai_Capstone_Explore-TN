@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios"; // ✅ Import axios
+import BASE_URL from "../src/baseURL"; // ✅ Import base URL
+
+const API = axios.create({ baseURL: BASE_URL }); // ✅ Axios instance
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -9,47 +13,39 @@ const Signup = () => {
     password: "",
   });
 
-  const [loading, setLoading] = useState(false);  // Added loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-    // Basic form validation
     if (!form.username || !form.email || !form.password) {
       alert("Please fill in all fields.");
       return;
     }
-  
+
     setLoading(true);
-  
+
     try {
-      const res = await fetch("http://localhost:8000/User/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: form.username,
-          email: form.email,
-          password: form.password,
-        }),
+      const res = await API.post("/User/signup", {
+        name: form.username,
+        email: form.email,
+        password: form.password,
       });
-  
-      const data = await res.json();
-  
-      if (res.ok) {
+
+      if (res.status === 201 || res.status === 200) {
         alert("Signup successful!");
         navigate("/login");
       } else {
-        alert(data.message || "Signup failed");
+        alert(res.data.message || "Signup failed");
       }
     } catch (error) {
       console.error("Signup error:", error);
-      alert("Server error. Please try again.");
+      const message =
+        error.response?.data?.message || "Server error. Please try again.";
+      alert(message);
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -108,7 +104,7 @@ const Signup = () => {
           <button
             onClick={handleSignup}
             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
-            disabled={loading} // Disable the button when loading
+            disabled={loading}
           >
             {loading ? "Signing Up..." : "Signup"}
           </button>

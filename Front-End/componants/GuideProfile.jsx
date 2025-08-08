@@ -10,6 +10,7 @@ import {
   FaEdit,
   FaTrash
 } from 'react-icons/fa';
+import BASE_URL from '../baseURL'; // ✅ Import base URL
 
 const GuideProfile = () => {
   const { id } = useParams();
@@ -17,14 +18,12 @@ const GuideProfile = () => {
   const [guide, setGuide] = useState(null);
   const [loading, setLoading] = useState(true);
   const [bioExpanded, setBioExpanded] = useState(false);
-
-  // 👉 New: Save logged-in user ID
   const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
     const fetchGuide = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/Guide/guides/${id}`);
+        const res = await fetch(`${BASE_URL}/Guide/guides/${id}`);
         if (res.ok) {
           const data = await res.json();
           setGuide(data);
@@ -44,34 +43,29 @@ const GuideProfile = () => {
 
     fetchGuide();
 
-    // 👉 New: Decode JWT to get current user ID
     const token = localStorage.getItem('token');
     if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      setCurrentUserId(payload.id);
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        setCurrentUserId(payload.id);
+      } catch (e) {
+        console.error("Invalid token format");
+      }
     }
   }, [id]);
 
-  const handleBioToggle = () => {
-    setBioExpanded(prev => !prev);
-  };
+  const handleBioToggle = () => setBioExpanded(prev => !prev);
 
-  const handleEdit = () => {
-    navigate(`/guides/${id}/edit`);
-  };
+  const handleEdit = () => navigate(`/guides/${id}/edit`);
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this guide?')) {
       try {
         const token = localStorage.getItem('token');
-
-        await fetch(`http://localhost:8000/Guide/guides/${id}`, {
+        await fetch(`${BASE_URL}/Guide/guides/${id}`, {
           method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
-
         navigate('/guides');
       } catch (error) {
         console.error('Error deleting guide:', error);
@@ -81,11 +75,13 @@ const GuideProfile = () => {
 
   if (loading) return <div className="text-white p-6">Loading...</div>;
 
-  if (!guide) return (
-    <div className="min-h-screen flex items-center justify-center text-white p-6">
-      <h1 className="text-2xl font-bold">Guide profile not found.</h1>
-    </div>
-  );
+  if (!guide) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white p-6">
+        <h1 className="text-2xl font-bold">Guide profile not found.</h1>
+      </div>
+    );
+  }
 
   const isOwner = guide.userId === currentUserId;
 
@@ -138,10 +134,11 @@ const GuideProfile = () => {
         {guide.photo && (
           <div className="flex justify-center items-center flex-shrink-0">
             <img
-              src={`http://localhost:8000${guide.photo}`}
-              alt="Guide"
-              className="rounded-2xl w-72 h-72 object-cover border border-cyan-500 shadow-lg"
-            />
+  src={`${BASE_URL}/uploads/${guide.photo}`}
+  alt="Guide"
+  className="rounded-2xl w-72 h-72 object-cover border border-cyan-500 shadow-lg"
+/>
+
           </div>
         )}
 
