@@ -5,9 +5,11 @@ const cors = require('cors');
 
 // ✅ CORS config – allow only your frontend
 app.use(cors({
-  origin: 'https://explore-tnoffcial.netlify.app/', // Netlify frontend
-  credentials: true, // needed if using cookies/auth
+  origin: 'https://explore-tnoffcial.netlify.app',
+  credentials: true,
 }));
+
+
 
 // ✅ Parse JSON requests
 app.use(express.json());
@@ -26,7 +28,7 @@ app.use('/Guide', guideRoute);
 app.use('/api/user-picks', userPicksRoute);
 
 app.get('/', (req, res) => {
-  res.send('Explore-TN Backend is running 🚀');
+  res.send('Explore-TN Backend is running buddy 🚀');
 });
 
 // ✅ Export the app
