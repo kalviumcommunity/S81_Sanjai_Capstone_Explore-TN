@@ -24,7 +24,13 @@ import Ooty from "../Placepage/Ooty";
 import Salem from "../Placepage/Salem";
 import Theni from "../Placepage/Theni";
 import PrivateRoute from "../componants/PrivateRoute"; // ✅ Import
-
+import Ariyalur from "../Placepage/Ariyalur";
+import Chengalpattu from "../Placepage/Chengalpattu";
+import Dharmapuri from "../Placepage/Dharmapuri";
+import Erode from "../Placepage/Erode";
+import Kallakurichi from "../Placepage/Kallakurichi";
+import Kanchipuram from "../Placepage/Kanchipuram";
+import Kanniyakumari from "../Placepage/Kanniyakumari";
 function App() {
   return (
     <Router>
@@ -47,6 +53,13 @@ function App() {
             <Route path="/Salem" element={<Salem />} />
             <Route path="/Theni" element={<Theni />} />
             <Route path="/hotels" element={<HotelList />} />
+            <Route path="/Ariyalur" element={<Ariyalur />} />
+            <Route path="/Chengalpattu" element={<Chengalpattu />} />
+            <Route path="/Dharmapuri" element={<Dharmapuri />} />
+            <Route path="/Erode" element={<Erode />} />
+            <Route path="/Kallakurichi" element={<Kallakurichi />} />
+            <Route path="/Kanchipuram" element={<Kanchipuram />} />
+            <Route path="/Kanniyakumari" element={<Kanniyakumari />} /> {/* ✅ Add Kanyakumari route */}
 
             {/* Protected Routes */}
             <Route path="/Guides" element={<PrivateRoute><Guides /></PrivateRoute>} />

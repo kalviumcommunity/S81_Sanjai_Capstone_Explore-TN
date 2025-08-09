@@ -1,82 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from 'react-icons/md';
+import BASE_URL from '../src/baseURL'; // ✅ imported base URL
 
-const Card = ({ title, content, image,city }) => {
+// ✅ Card
+const Card = ({ title, content, image, isFavorite, onToggleFavorite }) => {
   return (
-    <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+    <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl relative">
       <img
         src={image || 'https://via.placeholder.com/400'}
         alt={title}
         className="w-full h-48 object-cover"
       />
       <div className="p-6">
-        <h2 className="text-xl font-semibold mb-2 text-gray-100">{title} ({city})</h2>
-        <h3 className='text-xl font-semibold mb-2 text-gray-100'></h3>
+        <h2 className="text-xl font-semibold mb-2 text-gray-100">{title}</h2>
         <p className="text-gray-400 text-sm leading-relaxed">{content}</p>
       </div>
+      <button
+        onClick={() => onToggleFavorite(title)}
+        className="absolute top-4 right-4 text-3xl text-white"
+      >
+        {isFavorite ? <MdOutlineBookmarkAdded /> : <MdOutlineBookmarkAdd />}
+      </button>
     </div>
   );
 };
 
-const Section = ({ title, places }) => {
-  let mainPlaces = places;
-  let lastTwoPlaces = [];
-
-  let gridCols = 'md:grid-cols-4'; 
-
-  if (places.length === 10) {
-    mainPlaces = places.slice(0, 8);
-    lastTwoPlaces = places.slice(8);
-    gridCols = 'md:grid-cols-4'; 
-  } else if (places.length === 2) {
-    gridCols = 'md:grid-cols-2';
-  } else if (places.length === 5) {
-    mainPlaces = places.slice(0, 3);
-    lastTwoPlaces = places.slice(3);
-    gridCols = 'md:grid-cols-3';
-  } else if (places.length % 3 === 0) {
-    gridCols = 'md:grid-cols-3';
-  }
-
+// ✅ Section
+const Section = ({ title, places, favorites, onToggleFavorite }) => {
+  const gridCols = places.length % 3 === 0 || places.length === 5 ? 'md:grid-cols-3' : 'md:grid-cols-4';
   return (
     <div className="mb-12">
-      <h2 className="text-4xl font-bold text-gray-100 border-l-4 border-blue-500 pl-4 mb-6 uppercase">
-        {title}
-      </h2>
-
-      {/* First Main Places */}
+      <h2 className="text-4xl font-bold text-gray-100 border-l-4 border-blue-500 pl-4 mb-6 uppercase">{title}</h2>
       <div className={`grid grid-cols-1 ${gridCols} gap-8 p-4`}>
-        {mainPlaces.map((place, index) => (
+        {places.map((place, index) => (
           <Card
             key={index}
             title={place.title}
-            city={place.city}
             content={place.content}
             image={place.image}
+            isFavorite={favorites.includes(place.title)}
+            onToggleFavorite={onToggleFavorite}
           />
         ))}
       </div>
-
-      {/* Last Two Places (if any) */}
-      {lastTwoPlaces.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 mt-8">
-          {lastTwoPlaces.map((place, index) => (
-            <Card
-              key={`last-${index}`}
-              title={place.title}
-              city={place.city}
-              content={place.content}
-              image={place.image}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
 
+// ✅ Main
+function Coimbatore() {
+  const [favorites, setFavorites] = useState([]);
 
+  const token = localStorage.getItem('token');
 
-function Ooty() {
   const cityDescription = "Nilgiris district, nestled in the Western Ghats of Tamil Nadu, is renowned for its breathtaking hill stations, tea plantations, and rich biodiversity. Home to popular destinations like Ooty, Coonoor, and Kotagiri, the district offers cool climate, scenic views, and a perfect escape for nature enthusiasts and travelers.";
   ;
 
@@ -209,24 +186,67 @@ function Ooty() {
     ],
 
   };
+  
+  
+
+
+
+
+  useEffect(() => {
+    if (token) {
+      axios.get(`${BASE_URL}/User/favorites`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(res => {
+          setFavorites(res.data);
+        })
+        .catch(err => console.error(err));
+    }
+  }, [token]);
+
+  const handleToggleFavorite = async (title) => {
+  if (!token) {
+    alert("Please login to save favorites.");
+    return;
+  }
+
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/User/favorites`,
+      { name: title }, // ✅ must match backend
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setFavorites(res.data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+
+
 
   return (
     <div className="p-8 min-h-screen">
       <div className="bg-gray-950 text-gray-300 p-10 rounded-lg shadow-xl text-center max-w-5xl mx-auto">
         <h1 className="text-4xl font-extrabold text-gray-100 uppercase mb-4">
-          Top Attractions in Ooty
+          Top Attractions in Madurai
         </h1>
         <p className="text-lg font-light leading-relaxed">{cityDescription}</p>
       </div>
       <div className="mt-12">
         {Object.entries(places).map(([category, items], index) => (
-          <Section key={index} title={category} places={items} />
+          <Section
+            key={index}
+            title={category}
+            places={items}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-export default Ooty;
-
-
+export default Coimbatore;

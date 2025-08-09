@@ -1,38 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from 'react-icons/md';
+import BASE_URL from '../src/baseURL'; // ✅ imported base URL
 
-// Enhanced Card Component
-const Card = ({ title, content, image }) => {
+// ✅ Card
+const Card = ({ title, content, image, isFavorite, onToggleFavorite }) => {
   return (
-    <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-      <img 
-        src={image || 'https://via.placeholder.com/400'} 
-        alt={title} 
+    <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl relative">
+      <img
+        src={image || 'https://via.placeholder.com/400'}
+        alt={title}
         className="w-full h-48 object-cover"
       />
       <div className="p-6">
         <h2 className="text-xl font-semibold mb-2 text-gray-100">{title}</h2>
         <p className="text-gray-400 text-sm leading-relaxed">{content}</p>
       </div>
+      <button
+        onClick={() => onToggleFavorite(title)}
+        className="absolute top-4 right-4 text-3xl text-white"
+      >
+        {isFavorite ? <MdOutlineBookmarkAdded /> : <MdOutlineBookmarkAdd />}
+      </button>
     </div>
   );
 };
 
-// Enhanced Section Component
-const Section = ({ title, places }) => {
+// ✅ Section
+const Section = ({ title, places, favorites, onToggleFavorite }) => {
   const gridCols = places.length % 3 === 0 || places.length === 5 ? 'md:grid-cols-3' : 'md:grid-cols-4';
   return (
     <div className="mb-12">
       <h2 className="text-4xl font-bold text-gray-100 border-l-4 border-blue-500 pl-4 mb-6 uppercase">{title}</h2>
       <div className={`grid grid-cols-1 ${gridCols} gap-8 p-4`}>
         {places.map((place, index) => (
-          <Card key={index} title={place.title} content={place.content} image={place.image} />
+          <Card
+            key={index}
+            title={place.title}
+            content={place.content}
+            image={place.image}
+            isFavorite={favorites.includes(place.title)}
+            onToggleFavorite={onToggleFavorite}
+          />
         ))}
       </div>
     </div>
   );
 };
 
-function Madurai() {
+// ✅ Main
+function Coimbatore() {
+  const [favorites, setFavorites] = useState([]);
+
+  const token = localStorage.getItem('token');
+
   const cityDescription = "Madurai, one of the oldest cities in India, is a cultural and historical hub of Tamil Nadu. Known as the 'Temple City,' it is famous for the majestic Meenakshi Amman Temple, ancient monuments, and vibrant street markets. The city is also home to architectural marvels, traditional festivals, and significant religious sites, making it a must-visit destination.";
 
   const places = {
@@ -66,6 +87,45 @@ function Madurai() {
     ]
   };
 
+  
+
+
+
+
+  useEffect(() => {
+    if (token) {
+      axios.get(`${BASE_URL}/User/favorites`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(res => {
+          setFavorites(res.data);
+        })
+        .catch(err => console.error(err));
+    }
+  }, [token]);
+
+  const handleToggleFavorite = async (title) => {
+  if (!token) {
+    alert("Please login to save favorites.");
+    return;
+  }
+
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/User/favorites`,
+      { name: title }, // ✅ must match backend
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setFavorites(res.data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+
+
+
   return (
     <div className="p-8 min-h-screen">
       <div className="bg-gray-950 text-gray-300 p-10 rounded-lg shadow-xl text-center max-w-5xl mx-auto">
@@ -76,11 +136,17 @@ function Madurai() {
       </div>
       <div className="mt-12">
         {Object.entries(places).map(([category, items], index) => (
-          <Section key={index} title={category} places={items} />
+          <Section
+            key={index}
+            title={category}
+            places={items}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-export default Madurai;
+export default Coimbatore;
