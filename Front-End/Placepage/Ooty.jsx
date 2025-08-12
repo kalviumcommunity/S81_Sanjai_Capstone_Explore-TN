@@ -230,7 +230,7 @@ function Coimbatore() {
     <div className="p-8 min-h-screen">
       <div className="bg-gray-950 text-gray-300 p-10 rounded-lg shadow-xl text-center max-w-5xl mx-auto">
         <h1 className="text-4xl font-extrabold text-gray-100 uppercase mb-4">
-          Top Attractions in Madurai
+          Top Attractions in Nilgiri
         </h1>
         <p className="text-lg font-light leading-relaxed">{cityDescription}</p>
       </div>

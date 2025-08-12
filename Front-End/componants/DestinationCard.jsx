@@ -31,7 +31,7 @@ const destinations = [
   { id: 22, name: "Perambalur", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/large-desktop/perambalur-1655996823_74bfd05a5298c0ce76cd.webp", path: "/Perambalur" },
   { id: 23, name: "Pudukkottai", image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/02/2c/2a/25/chidambara-vilas-chettinad.jpg?w=500&h=300&s=1", path: "/Pudukkottai" },
   { id: 24, name: "Ramanathapuram", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/mobile/rameswaram-1657461850_7bb1e9861ee1dc4127ba.webp", path: "/Ramanathapuram" }, 
-  { id: 25, name: "Sivagangai", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/large-desktop/sivaganga-1656013801_c196928c461ae2a3c25b.webp", path: "/Sivaganga" },
+  { id: 25, name: "Sivagangai", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/large-desktop/sivaganga-1656013801_c196928c461ae2a3c25b.webp", path: "/Sivagangai" },
   { id: 26, name: "Tenkasi", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/large-desktop/tenkasi-1656043942_0dd1d7a5582f25b5db57.webp", path: "/Tenkasi" },
   { id: 27, name: "Thanjavur", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/large-desktop/thanjavur-1655294212_8d67c2fdaa46899ddda7.webp", path: "/Thanjavur" },
   { id: 28, name: "Thoothukudi", image: "https://www.tamilnadutourism.tn.gov.in/img/pages/large-desktop/tuticorin-1654611283_94a49d4e08e03d44cb27.webp", path: "/Thoothukudi" },

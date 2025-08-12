@@ -31,6 +31,27 @@ import Erode from "../Placepage/Erode";
 import Kallakurichi from "../Placepage/Kallakurichi";
 import Kanchipuram from "../Placepage/Kanchipuram";
 import Kanniyakumari from "../Placepage/Kanniyakumari";
+import Karur from "../Placepage/Karur";
+import Krishnagiri from "../Placepage/Krishnagiri";
+import Mayiladuthurai from "../Placepage/Mayiladuthurai";
+import Nagapattinam from "../Placepage/Nagapattinam";
+import Perambalur from "../Placepage/Perambalur";
+import Pudukkottai from "../Placepage/Pudukkottai";
+import Ramanathapuram from "../Placepage/Ramanathapuram";
+import Sivagangai from "../Placepage/Sivagangai";
+import Tenkasi from "../Placepage/Tenkasi";
+import Thanjavur from "../Placepage/Thanjavur";
+import Thoothukudi from "../Placepage/Thoothukudi";
+import Tiruchirappalli from "../Placepage/Tiruchirappalli";
+import Tirunelveli from "../Placepage/Tirunelveli";
+import Tirupathur from "../Placepage/Tirupathur";
+import Tiruppur from "../Placepage/Tiruppur"
+import Tiruvallur from "../Placepage/Tiruvallur";
+import Tiruvannamalai from "../Placepage/Tiruvannamalai";
+import Tiruvarur from "../Placepage/Tiruvarur";
+import Vellore from "../Placepage/Vellore";
+import Viluppuram from "../Placepage/Viluppuram";
+import Virudhunagar from "../Placepage/Virudhunagar";
 function App() {
   return (
     <Router>
@@ -60,6 +81,28 @@ function App() {
             <Route path="/Kallakurichi" element={<Kallakurichi />} />
             <Route path="/Kanchipuram" element={<Kanchipuram />} />
             <Route path="/Kanniyakumari" element={<Kanniyakumari />} /> {/* ✅ Add Kanyakumari route */}
+            <Route path="/Karur" element={<Karur />} /> 
+            <Route path="/Krishnagiri" element={<Krishnagiri/>} /> 
+            <Route path="/Mayiladuthurai" element={<Mayiladuthurai/>} /> 
+            <Route path="/Nagapattinam" element={<Nagapattinam/>} />
+            <Route path="/Perambalur" element={<Perambalur/>} /> 
+            <Route path="/Pudukkottai" element={<Pudukkottai/>} />
+            <Route path="/Ramanathapuram" element={<Ramanathapuram/>} />
+            <Route path="/Sivagangai" element={<Sivagangai/>} />
+            <Route path="/Tenkasi" element={<Tenkasi/>} />
+            <Route path="/Thanjavur" element={<Thanjavur/>} />
+            <Route path="/Thoothukudi" element={<Thoothukudi/>} />
+            <Route path="/Tiruchirappalli" element={<Tiruchirappalli/>} />
+            <Route path="/Tirunelveli" element={<Tirunelveli/>} />
+            <Route path="/Tirupathur" element={<Tirupathur/>} />
+            <Route path="/Tiruppur" element={<Tiruppur/>} />
+            <Route path="/Tiruvallur" element={<Tiruvallur/>} />
+            <Route path="/Tiruvannamalai" element={<Tiruvannamalai/>} />
+            <Route path="/Tiruvarur" element={<Tiruvarur/>} />
+            <Route path="/Vellore" element={<Vellore/>} />
+            <Route path="/Viluppuram" element={<Viluppuram/>} />
+            <Route path="/Virudhunagar" element={<Virudhunagar/>} />
+
 
             {/* Protected Routes */}
             <Route path="/Guides" element={<PrivateRoute><Guides /></PrivateRoute>} />
