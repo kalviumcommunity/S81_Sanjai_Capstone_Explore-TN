@@ -116,7 +116,7 @@ function Guides() {
             <div className="w-55 h-55 rounded-lg overflow-hidden flex-shrink-0">
               {guide.photo ? (
                 <img
-                  src={`${BASE_URL}${guide.photo}`}
+                  src={`${BASE_URL}/uploads/${guide.photo}`}
                   alt="Guide"
                   className="w-full h-full object-cover"
                 />

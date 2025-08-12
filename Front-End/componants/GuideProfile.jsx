@@ -134,7 +134,8 @@ const GuideProfile = () => {
         {guide.photo && (
           <div className="flex justify-center items-center flex-shrink-0">
             <img
-  src={`${BASE_URL}${guide.photo}`}
+ src={`${BASE_URL}/uploads/${guide.photo}`}
+
   alt="Guide"
   className="rounded-2xl w-72 h-72 object-cover border border-cyan-500 shadow-lg"
 />
