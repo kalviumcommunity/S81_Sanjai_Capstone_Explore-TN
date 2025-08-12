@@ -1,0 +1,52 @@
+/* Explore.css */
+
+/* Slim custom scrollbar for chat box */
+.chat-scroll::-webkit-scrollbar {
+  width: 1px;
+  height: 2px;
+}
+
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb {
+  background-color: #7B61FF;
+  border-radius: 2px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #9D7FFF;
+}
+
+/* Firefox support */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #7B61FF transparent;
+}
+
+/* In Explore.css or inline style */
+.flex-1 {
+  overflow-x: hidden; /* Hide horizontal overflow */
+  word-wrap: break-word; /* Break long words so they don't overflow */
+  white-space: normal; /* Prevent forced horizontal scrolling due to white-space */
+}
+
+/* Example: the chat scroll container */
+.chat-scroll {
+  overflow-x: hidden;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.message-container {
+  padding-bottom: 12px; /* space for the border */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* light translucent white line */
+  margin-bottom: 12px; /* space after the border */
+}
+
+/* Remove border on the last message */
+.message-container:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}

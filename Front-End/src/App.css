@@ -9,7 +9,7 @@
 
 /* ✅ Scrollbar styles ONLY apply to this container */
 .app-scroll-wrapper::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
 }
 
 .app-scroll-wrapper::-webkit-scrollbar-track {

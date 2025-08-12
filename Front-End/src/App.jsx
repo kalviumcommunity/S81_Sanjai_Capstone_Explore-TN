@@ -52,6 +52,7 @@ import Tiruvarur from "../Placepage/Tiruvarur";
 import Vellore from "../Placepage/Vellore";
 import Viluppuram from "../Placepage/Viluppuram";
 import Virudhunagar from "../Placepage/Virudhunagar";
+import Card from "../pages/NotFound";
 function App() {
   return (
     <Router>
@@ -113,6 +114,7 @@ function App() {
             <Route path="/UserPick" element={<PrivateRoute><UserPicks /></PrivateRoute>} />
             <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="/Favourite" element={<PrivateRoute><Favourite /></PrivateRoute>} />
+            <Route path="*" element={<Card />} />
           </Routes>
         </div>
       </div>

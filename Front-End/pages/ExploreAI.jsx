@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./Explore.css"; // 👈 Import the CSS file
 
 const API_KEY = "AIzaSyB5fbW1uGBuO9JUl72R6rTKQhfVNU2kOgQ";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -32,7 +33,9 @@ If the user ask's to tell me the things in tanglish that time only you want to  
 
 Now, please provide an accurate and well-structured travel response based on the user’s query.
 
-if any user ask's to tell me about the Explore-TN app, reply:🗺️ 1️⃣ Discover Tourist Places
+You are working for Explore-TN app.
+
+if any user ask's to tell me about the Explore-TN app, modify this content to bullet point and  reply:🗺️ 1️⃣ Discover Tourist Places
 Explore famous spots, hidden gems, and local secrets.
 
 Browse places by district, city, category (temples, waterfalls, hills, beaches, cultural sites, historical sites).
@@ -89,7 +92,7 @@ Guides can upload a photo, write a bio, and highlight their expertise.
 
 Each guide has a dedicated profile page.
 
-This app is your one-stop solution for exploring Tamil Nadu like a local!`;
+This app is your one-stop solution for exploring Tamil Nadu like a local!`; // Keeping your big system prompt here as is
 
             const requestBody = {
                 contents: [
@@ -100,7 +103,10 @@ This app is your one-stop solution for exploring Tamil Nadu like a local!`;
 
             const resp = await axios.post(GEMINI_API_URL, requestBody);
             let responseText = resp.data?.candidates?.[0]?.content?.parts?.[0]?.text || "No relevant tourism data found.";
-            responseText = responseText.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\*/g, "•").replace(/\n/g, "<br>");
+            responseText = responseText
+                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                .replace(/\*/g, "•")
+                .replace(/\n/g, "<br>");
             return responseText;
         } catch (e) {
             console.error("Error fetching response:", e.message);
@@ -125,21 +131,49 @@ This app is your one-stop solution for exploring Tamil Nadu like a local!`;
     };
 
     return (
-        <div className="bg-[#18122B] w-full h-screen flex justify-center items-center">
-            <div className="bg-[#1E1A36] flex flex-col p-4 rounded-lg shadow-lg w-full h-full">
-                <div className="flex-1 overflow-y-auto border border-gray-700 p-4 rounded-lg bg-[#242036] space-y-2">
+        <div className="bg-[#0A0F1D] w-full h-screen flex justify-center items-center">
+            <div className="bg-[#0A0F1D] flex flex-col p-4 rounded-lg shadow-lg w-full h-full">
+                {/* Added chat-scroll class here */}
+                <div className="flex-1 overflow-y-auto border border-gray-700 p-4 rounded-lg bg-[#0A0F1D] space-y-2 chat-scroll">
                     {messages.map((msg, index) => (
-                        <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                            <div className={`p-2 rounded-lg ${msg.sender === "user" ? "bg-purple-600 text-white" : "bg-gray-700 text-gray-300"}`}>
-                                <div className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: msg.text }}></div>
+                        <div
+                            key={index}
+                            className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+                        >
+                            <div
+                                className={`p-2 rounded-lg ${msg.sender === "user"
+                                        ? "bg-purple-600 text-white"
+                                        : "bg-[#0A0F1D] text-white border border-white"
+                                    }`}
+                            >
+                                <div
+                                    className="text-lg font-medium message-text"
+                                    dangerouslySetInnerHTML={{ __html: msg.text }}
+                                ></div>
                             </div>
                         </div>
                     ))}
-                    {loading && <div className="flex justify-center items-center mt-4"><div className="w-10 h-10 border-4 border-t-4 border-purple-600 rounded-full animate-spin"></div></div>}
+
+                    {loading && (
+                        <div className="flex justify-center items-center mt-4">
+                            <div className="w-10 h-10 border-4 border-t-4 border-purple-600 rounded-full animate-spin"></div>
+                        </div>
+                    )}
                 </div>
+
                 <div className="mt-4 flex">
-                    <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask about Tamil Nadu Tourism..." className="flex-1 p-3 rounded-l-lg bg-[#2D2A4A] text-white placeholder-gray-400 focus:outline-none text-lg" />
-                    <button onClick={sendMessage} className="px-5 py-3 bg-[#7B61FF] text-white font-semibold rounded-r-lg hover:bg-[#6A51E6] text-lg">Send</button>
+                    <input
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Ask about Tamil Nadu Tourism..."
+                        className="flex-1 p-3 rounded-l-lg bg-[#2D2A4A] text-white placeholder-gray-400 focus:outline-none text-lg"
+                    />
+                    <button
+                        onClick={sendMessage}
+                        className="px-5 py-3 bg-[#7B61FF] text-white font-semibold rounded-r-lg hover:bg-[#6A51E6] text-lg"
+                    >
+                        Send
+                    </button>
                 </div>
             </div>
         </div>

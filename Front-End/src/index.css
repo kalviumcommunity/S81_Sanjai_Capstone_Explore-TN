@@ -20,7 +20,7 @@
 
 /* ✅ Scrollbar styles ONLY apply to this container */
 .app-scroll-wrapper::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
 }
 
 .app-scroll-wrapper::-webkit-scrollbar-track {
@@ -29,7 +29,7 @@
 
 .app-scroll-wrapper::-webkit-scrollbar-thumb {
   background-color: #555;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .app-scroll-wrapper::-webkit-scrollbar-thumb:hover {
