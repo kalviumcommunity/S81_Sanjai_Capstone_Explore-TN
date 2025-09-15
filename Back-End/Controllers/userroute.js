@@ -50,11 +50,11 @@ router.post("/login", catchAsyncError(async (req, res, next) => {
     { expiresIn: "1d" }
   );
 
-  await sendMail({
-    email: user.email,
-    subject: "Login Notification From  - ExploreTN",
-    message: `We are welcoming you. Hi ${user.name},\n\nYou just logged in to your ExploreTN account.\n\nIf this wasn’t you, please reset your password immediately.\n\nThanks,\nTeam ExploreTN`,
-  });
+  // await sendMail({
+  //   email: user.email,
+  //   subject: "Login Notification From  - ExploreTN",
+  //   message: `We are welcoming you. Hi ${user.name},\n\nYou just logged in to your ExploreTN account.\n\nIf this wasn’t you, please reset your password immediately.\n\nThanks,\nTeam ExploreTN`,
+  // });
 
   // ✅ ONLY ONE RESPONSE!
   res.status(200).json({
