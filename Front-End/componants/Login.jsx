@@ -19,7 +19,7 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/"); // Go to home
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       const message =

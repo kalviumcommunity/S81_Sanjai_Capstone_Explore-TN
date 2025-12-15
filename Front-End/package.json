@@ -6,8 +6,21 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "electron .",
+    "desktop-dev": "vite build && electron .",
+    "dist": "electron-builder"
+  },
+  "main": "electron.js",
+  "build": {
+    "appId": "explore.tn.desktop",
+    "productName": "ExploreTN",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    }
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -34,6 +47,8 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "electron": "^39.2.3",
+    "electron-builder": "^24.13.3",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",

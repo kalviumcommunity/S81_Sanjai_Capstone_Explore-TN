@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from "react-icons/md";
 
-// ✅ Replace this with your actual HOTELS data!
+
 const HOTELS = [
   
   {

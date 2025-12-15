@@ -2,14 +2,14 @@
 .calendar-container {
   position: fixed;
   right: 0px;
-  top: 80px;
+  top: 100px;
   width: 22%;
-  height: calc(100vh - 80px);
+  height: calc(110vh - 90px);
   background-color: #0c1220;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 10px;
+  padding: 8px 15px;
   overflow-y: auto;
   box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.3);
 }
@@ -20,18 +20,18 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 2px solid #A3E635;
   border-radius: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .profile-icon {
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .profile-name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: white;
 }
@@ -40,9 +40,9 @@
 .calendar-wrapper {
   width: 90%;
   background-color: #1b2340;
-  border-radius: 16px;
-  padding: 10px;
-  margin-bottom: 20px;
+  border-radius: 14px;
+  padding: 10px; /* reduced padding */
+  margin-bottom: 16px;
 }
 
 .react-calendar {
@@ -50,14 +50,11 @@
   background-color: #1b2340;
   border: none;
   color: white;
-  font-size: 13px;
+  font-size: 15px; /* smaller font */
 }
 
 .react-calendar__navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px; /* tighter spacing */
 }
 
 .react-calendar__navigation button {
@@ -65,8 +62,8 @@
   background: none;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 11px;
-  padding: 5px;
+  font-size: 10px;
+  padding: 4px;
   cursor: pointer;
 }
 
@@ -81,12 +78,9 @@
 
 .react-calendar__tile {
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
+  width: 34px;
+  height: 34px;
+  font-size: 12px;
   font-weight: bold;
 }
 
@@ -103,14 +97,12 @@
 .react-calendar__tile:hover {
   background: #353c4a !important;
   color: white !important;
-  border-radius: 50%;
   transition: 0.3s ease-in-out;
 }
 
 .trip-date {
   background-color: #FFA500 !important;
   color: white !important;
-  border-radius: 50%;
 }
 
 .weekend-day {
@@ -121,12 +113,10 @@
 .festival-section {
   width: 90%;
   background: #1b2340;
-  padding: 15px;
+  padding: 14px;
   border-radius: 12px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   color: white;
-  max-width: 100%;
-  overflow-x: hidden;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -138,7 +128,7 @@
   font-weight: bold;
   color: #ffcc00;
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .festival-list {
@@ -147,35 +137,17 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-right: 4px;
+  padding-right: 2px;
 }
 
-/* ⭐⭐ NEW: Slim Scrollbar Styling ⭐⭐ */
 .festival-list::-webkit-scrollbar {
   width: 0px;
 }
 
-.festival-list::-webkit-scrollbar-track {
-  background: #1b2340;
-}
-
-.festival-list::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 3px;
-}
-
-.festival-list::-webkit-scrollbar-thumb:hover {
-  background-color: #888;
-}
-
-/* =================== Festival Card =================== */
 .festival-card {
   background: #1f2937;
-  padding: 10px;
+  padding: 11px;
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   transition: 0.3s ease;
 }
 
@@ -184,29 +156,13 @@
 }
 
 .festival-name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
-  color: #f8f9fa;
 }
 
 .festival-date {
-  font-size: 13px;
+  font-size: 12px;
   color: #b0b0b0;
-}
-
-/* =================== Trip Plan =================== */
-.trip-saved-box {
-  background-color: #0c1220;
-  padding: 12px;
-  margin-top: 16px;
-  border-left: 4px solid #f06292;
-  border-radius: 6px;
-}
-
-.trip-saved-box h5 {
-  margin: 0 0 6px 0;
-  font-size: 15px;
-  color: #d81b60;
 }
 
 /* =================== Responsive =================== */
@@ -218,3 +174,26 @@
     height: auto;
   }
 }
+
+/* =================== Weather Section =================== */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px; /* space between calendar & festivals */
+}
+
+.calendar-wrapper,
+.festival-section {
+  width: 90%;
+  flex: 1; /* makes both sections share height equally */
+  display: flex;
+  flex-direction: column;
+}
+
+.festival-list {
+  flex: 1; /* lets the list scroll within the fixed height */
+  overflow-y: auto;
+}
+
+
