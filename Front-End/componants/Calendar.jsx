@@ -23,10 +23,7 @@ const CalendarCard = () => {
   }, {});
 
   return (
-    <div
-      className="calendar-container sticky top-6"
-      style={{ height: "calc(100vh - 24px)", overflow: "hidden" }}
-    >
+    <div className="calendar-container sticky top-6">
       {/* Calendar Section */}
       <div className="calendar-wrapper">
         <Calendar
@@ -54,7 +51,7 @@ const CalendarCard = () => {
       {/* Festival List Section */}
       <div
         className="festival-section"
-        style={{ overflowY: "auto", maxHeight: "40vh" }}
+        style={{ overflowY: "auto", flex: 1 }}
       >
         <h5>Festivals in Tamil Nadu - 2025</h5>
         {Object.keys(groupedFestivals).length > 0 ? (

@@ -4,7 +4,7 @@
   right: 0px;
   top: 100px;
   width: 22%;
-  height: calc(110vh - 90px);
+  height: calc(100vh - 100px);
   background-color: #0c1220;
   display: flex;
   flex-direction: column;
@@ -41,8 +41,11 @@
   width: 90%;
   background-color: #1b2340;
   border-radius: 14px;
-  padding: 10px; /* reduced padding */
+  padding: 10px;
+  /* reduced padding */
   margin-bottom: 16px;
+  flex: 0 0 auto;
+  /* Don't grow, only take needed space */
 }
 
 .react-calendar {
@@ -50,11 +53,13 @@
   background-color: #1b2340;
   border: none;
   color: white;
-  font-size: 15px; /* smaller font */
+  font-size: 15px;
+  /* smaller font */
 }
 
 .react-calendar__navigation {
-  margin-bottom: 4px; /* tighter spacing */
+  margin-bottom: 4px;
+  /* tighter spacing */
 }
 
 .react-calendar__navigation button {
@@ -117,7 +122,10 @@
   border-radius: 12px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   color: white;
-  flex-grow: 1;
+  flex: 1 1 auto;
+  /* Grow to fill available space */
+  min-height: 0;
+  /* Allow flex shrinking */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -180,20 +188,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px; /* space between calendar & festivals */
+  gap: 14px;
+  /* space between calendar & festivals */
 }
 
 .calendar-wrapper,
 .festival-section {
   width: 90%;
-  flex: 1; /* makes both sections share height equally */
+  flex: 1;
+  /* makes both sections share height equally */
   display: flex;
   flex-direction: column;
 }
 
 .festival-list {
-  flex: 1; /* lets the list scroll within the fixed height */
+  flex: 1;
+  /* lets the list scroll within the fixed height */
   overflow-y: auto;
 }
-
-
