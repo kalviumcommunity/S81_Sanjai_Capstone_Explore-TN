@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from "../componants/Sidebar";
 import Topbar from "../componants/Topbar";
 import Dashboard from "../pages/DashboardPage";
@@ -82,27 +84,27 @@ function App() {
             <Route path="/Kallakurichi" element={<Kallakurichi />} />
             <Route path="/Kanchipuram" element={<Kanchipuram />} />
             <Route path="/Kanniyakumari" element={<Kanniyakumari />} /> {/* ✅ Add Kanyakumari route */}
-            <Route path="/Karur" element={<Karur />} /> 
-            <Route path="/Krishnagiri" element={<Krishnagiri/>} /> 
-            <Route path="/Mayiladuthurai" element={<Mayiladuthurai/>} /> 
-            <Route path="/Nagapattinam" element={<Nagapattinam/>} />
-            <Route path="/Perambalur" element={<Perambalur/>} /> 
-            <Route path="/Pudukkottai" element={<Pudukkottai/>} />
-            <Route path="/Ramanathapuram" element={<Ramanathapuram/>} />
-            <Route path="/Sivagangai" element={<Sivagangai/>} />
-            <Route path="/Tenkasi" element={<Tenkasi/>} />
-            <Route path="/Thanjavur" element={<Thanjavur/>} />
-            <Route path="/Thoothukudi" element={<Thoothukudi/>} />
-            <Route path="/Tiruchirappalli" element={<Tiruchirappalli/>} />
-            <Route path="/Tirunelveli" element={<Tirunelveli/>} />
-            <Route path="/Tirupathur" element={<Tirupathur/>} />
-            <Route path="/Tiruppur" element={<Tiruppur/>} />
-            <Route path="/Tiruvallur" element={<Tiruvallur/>} />
-            <Route path="/Tiruvannamalai" element={<Tiruvannamalai/>} />
-            <Route path="/Tiruvarur" element={<Tiruvarur/>} />
-            <Route path="/Vellore" element={<Vellore/>} />
-            <Route path="/Viluppuram" element={<Viluppuram/>} />
-            <Route path="/Virudhunagar" element={<Virudhunagar/>} />
+            <Route path="/Karur" element={<Karur />} />
+            <Route path="/Krishnagiri" element={<Krishnagiri />} />
+            <Route path="/Mayiladuthurai" element={<Mayiladuthurai />} />
+            <Route path="/Nagapattinam" element={<Nagapattinam />} />
+            <Route path="/Perambalur" element={<Perambalur />} />
+            <Route path="/Pudukkottai" element={<Pudukkottai />} />
+            <Route path="/Ramanathapuram" element={<Ramanathapuram />} />
+            <Route path="/Sivagangai" element={<Sivagangai />} />
+            <Route path="/Tenkasi" element={<Tenkasi />} />
+            <Route path="/Thanjavur" element={<Thanjavur />} />
+            <Route path="/Thoothukudi" element={<Thoothukudi />} />
+            <Route path="/Tiruchirappalli" element={<Tiruchirappalli />} />
+            <Route path="/Tirunelveli" element={<Tirunelveli />} />
+            <Route path="/Tirupathur" element={<Tirupathur />} />
+            <Route path="/Tiruppur" element={<Tiruppur />} />
+            <Route path="/Tiruvallur" element={<Tiruvallur />} />
+            <Route path="/Tiruvannamalai" element={<Tiruvannamalai />} />
+            <Route path="/Tiruvarur" element={<Tiruvarur />} />
+            <Route path="/Vellore" element={<Vellore />} />
+            <Route path="/Viluppuram" element={<Viluppuram />} />
+            <Route path="/Virudhunagar" element={<Virudhunagar />} />
 
 
             {/* Protected Routes */}
@@ -118,8 +120,21 @@ function App() {
           </Routes>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </Router>
   );
 }
 
 export default App;
+

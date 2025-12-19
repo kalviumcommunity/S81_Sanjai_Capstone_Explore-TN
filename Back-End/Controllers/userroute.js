@@ -1,24 +1,24 @@
 const express = require("express");
 
-const bcrypt=require("bcrypt")
+const bcrypt = require("bcrypt")
 const User = require("../models/userModel");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middelware/catchAsyncError");
 const router = express.Router();
-const jwt=require("jsonwebtoken")
-const {sendMail}=require("../utils/mail")
+const jwt = require("jsonwebtoken")
+const { sendMail } = require("../utils/mail")
 const { isAuthenticatedUser } = require("../middelware/authMiddleware");
 
 
 router.post("/signup", catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
 
- 
+
   console.log('Signup request body:', req.body);
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+    return res.status(400).json({ message: "User already exists" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,7 +37,7 @@ router.post("/login", catchAsyncError(async (req, res, next) => {
   const user = await User.findOne({ email });
   if (!user) {
     return res.status(404).json({ message: "User not found" });
-  }   
+  }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
@@ -146,6 +146,48 @@ router.delete("/favorites/:name", isAuthenticatedUser, async (req, res) => {
 });
 
 
+// ✅ Update user profile (PUT)
+router.put("/profile", isAuthenticatedUser, catchAsyncError(async (req, res, next) => {
+  const { name } = req.body;
+
+  if (!name || name.trim() === "") {
+    return res.status(400).json({ message: "Name is required" });
+  }
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  user.name = name.trim();
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  });
+}));
+
+// ✅ Delete user profile (DELETE) - authenticated user can delete their own account
+router.delete("/profile", isAuthenticatedUser, catchAsyncError(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.user._id);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Account deleted successfully"
+  });
+}));
+
+// ✅ Delete user by ID (admin route - should be protected with admin middleware)
 router.delete("/user/:id", catchAsyncError(async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.params.id);
 
